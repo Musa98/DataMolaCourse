@@ -6,7 +6,6 @@
 
 ***
 
-## :star2: TwitTask
->*TwitTask contains the main Twitter project*
-## :star: ExtraTasks
->*ExtraTasks contains additional tasks*
+## :star2: mockups
+>*mockups contain desktop and mobile frames with link on figma*
+
