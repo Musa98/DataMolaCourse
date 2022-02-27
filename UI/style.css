@@ -7,6 +7,8 @@ body {
     font-family: 'Rajdhani', sans-serif;
 }
 
+/* header */
+
 header {
     display: flex;
     justify-content: space-between;
@@ -17,7 +19,7 @@ header {
     opacity: 78%;
 }
 
-img {
+.logo {
     margin-left: 37px;
 }
 
@@ -30,20 +32,96 @@ img {
     margin-right: 25px;
 }
 
-.header-user-name {
+.text-user-name {
     font-size: 24px;
-    font-weight: 600;
+    font-weight: 400;
     color: white;
+}
+
+button{
+    border: none; 
+    outline: none;
+    border-radius: 4px;
+    background-color: #F9E8D6;
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.25);
 }
 
 .exit-button {
     width: 80px;
     height: 39px;
-    border-radius: 4px;
-    border: none; 
-    outline: none;
     font-size: 18px;
-    font-weight: 600;
-    background-color: #F9E8D6;
-    box-shadow: 0px 1px 2px rgba(253, 250, 250, 0.25);
+    font-weight: 400;
 }
+
+.exit-button:hover {
+    background-color:#EEDECC;
+    cursor: pointer;
+}
+
+/* Блок добавления твита и фильтр */
+
+aside {
+    display: flex;
+    justify-content: space-between;
+    width: auto;
+    height: 195px;
+    background-color: #F4F4F4;
+}
+
+.filter-button{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 137px;
+    height: 50px;
+    margin-left: 37px;
+    margin-top: 19px;
+}
+
+.filter-button:hover {
+    background-color:#EEDECC;
+    cursor: pointer;
+}
+
+.text-filter-name{
+    margin-right: 12px;
+    font-size: 24px;
+    font-weight: 600;   
+}
+
+.container-add-twit{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 792px;
+    height: 217px;
+    margin-top: 19px;
+    margin-right: 360px ;
+}
+
+.textarea-add-twit {
+    padding-left: 17px;
+    padding-right: 17px;
+    padding-top: 19px;
+    padding-bottom: 19px;
+    width: 792px;
+    height: 87px;
+    border-radius: 10px;
+    border:solid black 2px;
+    background-color: #F9F9F9;
+}
+
+.add-twit-button {
+    margin-top: 24px;
+    width: 166px;
+    height: 36px;
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.add-twit-button:hover {
+    background-color:#EEDECC;
+    cursor: pointer;
+}
+
+
