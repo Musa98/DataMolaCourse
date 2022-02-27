@@ -149,8 +149,28 @@ article {
     height: 200px;
     margin-top: 43px;
     margin-bottom: 24px;
+    padding-right: 35px;
     background-color: #e5c891;
     box-shadow: 4px 2px 7px rgba(0, 0, 0, 0.25);
+}
+
+.delete-button {
+    position: relative;
+    left: 625px;
+    bottom: 78px;
+    background-color: transparent ;
+    box-shadow: 0 0 0;
+    opacity: 0;
+}
+
+.delete-button:hover {
+    opacity: 100%;
+    cursor: pointer;
+}
+
+.delete-img {
+    width:35px;
+    height: 35px;
 }
 
 .avatar {
