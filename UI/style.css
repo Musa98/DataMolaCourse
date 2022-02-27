@@ -26,9 +26,9 @@ header {
 .container-menu-user {
     display: flex;
     justify-content: space-between;
-    align-items:center;
+    align-items: center;
     width: 177px;
-    height:39px;
+    height: 39px;
     margin-right: 25px;
 }
 
@@ -38,8 +38,8 @@ header {
     color: white;
 }
 
-button{
-    border: none; 
+button {
+    border: none;
     outline: none;
     border-radius: 4px;
     background-color: #F9E8D6;
@@ -50,15 +50,15 @@ button{
     width: 80px;
     height: 39px;
     font-size: 18px;
-    font-weight: 400;
+    font-weight: 500;
 }
 
 .exit-button:hover {
-    background-color:#EEDECC;
+    background-color: #EEDECC;
     cursor: pointer;
 }
 
-/* Блок добавления твита и фильтр */
+/* Блок добавления твита и кнопка фильтра */
 
 aside {
     display: flex;
@@ -68,7 +68,7 @@ aside {
     background-color: #F4F4F4;
 }
 
-.filter-button{
+.filter-button {
     display: flex;
     align-items: center;
     justify-content: space-around;
@@ -79,36 +79,33 @@ aside {
 }
 
 .filter-button:hover {
-    background-color:#EEDECC;
+    background-color: #EEDECC;
     cursor: pointer;
 }
 
-.text-filter-name{
+.text-filter-name {
     margin-right: 12px;
     font-size: 24px;
-    font-weight: 600;   
+    font-weight: 600;
 }
 
-.container-add-twit{
+.container-add-twit {
     display: flex;
     align-items: center;
     flex-direction: column;
     width: 792px;
     height: 217px;
     margin-top: 19px;
-    margin-right: 404px ;
+    margin-right: 404px;
 }
 
 .textarea-add-twit {
-    padding-left: 17px;
-    padding-right: 17px;
-    padding-top: 19px;
-    padding-bottom: 19px;
+    padding: 19px 17px;
     width: 792px;
     height: 87px;
     border-radius: 10px;
     resize: none;
-    border:solid black 2px;
+    border: solid black 2px;
     background-color: #F9F9F9;
 }
 
@@ -117,12 +114,166 @@ aside {
     width: 166px;
     height: 36px;
     font-size: 18px;
-    font-weight: 400;
+    font-weight: 500;
 }
 
 .add-twit-button:hover {
-    background-color:#EEDECC;
+    background-color: #EEDECC;
     cursor: pointer;
 }
 
+/* Контейнер для main */
 
+.container-main {
+    display: flex;
+    justify-content: center;
+    background-color: rgba(210, 190, 250, 0.62);
+}
+
+/* Main */
+
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 915px;
+    background-color: white;
+}
+
+article {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 714px;
+    height: 200px;
+    margin-top: 43px;
+    margin-bottom: 24px;
+    background-color: #e5c891;
+    box-shadow: 4px 2px 7px rgba(0, 0, 0, 0.25);
+}
+
+.avatar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 81px;
+    height: 104px;
+    margin-bottom: 20px;
+    margin-right: 23px;
+}
+
+.img-avatar {
+    width: 97px;
+    height: 97px;
+    margin-bottom: 4px;
+    border-radius: 10px;
+    border: 1px solid #F6F1F1;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.name-avatar {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.twit-information {
+    display: flex;
+    flex-direction: column;
+    width: 435px;
+    height: 124px;
+}
+
+.twit-text {
+    width: 435px;
+    height: 96px;
+    padding: 7px 11px;
+    resize: none;
+    font-size: 13px;
+    font-weight: 500;
+    background-color: #EBEAE9;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border: 1px solid #B0AEAA;
+}
+
+.twit-dates {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 5px;
+    width: 435px;
+    height: 30px;
+}
+
+.twit-date-and-time {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 119px;
+    height: 25px;
+}
+
+.date-information {
+    margin-right: 10px;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.time-information {
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.edit-and-comment {
+    display: flex;
+    justify-content: space-between;
+    align-items:center;
+    width: 117px;
+    height: 25px;
+}
+
+.edit-button {
+    width: 65px;
+    height: 24px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.edit-button:hover {
+    background-color: #EEDECC;
+    cursor: pointer;
+}
+
+.twit-comments {
+    display: flex;
+    align-items:center;
+    justify-content: flex-end;
+    width: 39px;
+    height: 25px;
+    margin-top: 1px;
+}
+
+.comment-img {
+    width: 23px;
+    height: 23px;
+    margin-right: 2px;
+}
+
+.comment-count {
+    font-size: 15px;
+    font-weight: 400;
+}
+
+.load-button {
+    width: 206px;
+    height: 37px;
+    margin-bottom: 69px;
+    margin-top: 45px;
+    font-size: 24px;
+    font-weight: 500;
+}
+
+.load-button:hover {
+    background-color: #EEDECC;
+    cursor: pointer;
+}
