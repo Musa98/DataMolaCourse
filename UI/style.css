@@ -96,7 +96,7 @@ aside {
     width: 792px;
     height: 217px;
     margin-top: 19px;
-    margin-right: 360px ;
+    margin-right: 404px ;
 }
 
 .textarea-add-twit {
@@ -107,6 +107,7 @@ aside {
     width: 792px;
     height: 87px;
     border-radius: 10px;
+    resize: none;
     border:solid black 2px;
     background-color: #F9F9F9;
 }
