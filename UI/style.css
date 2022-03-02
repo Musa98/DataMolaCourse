@@ -18,14 +18,14 @@ header {
     justify-content: space-between;
     align-items: center;
     width: 100vw;
-    height: 69px;
+    height: 4.3rem;
     background-color: rgba(32, 29, 36, 0.78);
     z-index: 100;
 
 }
 
 .logo {
-    margin-left: 37px;
+    margin-left: 2.3rem;
     width:53px;
     height: 53px;
 }
@@ -34,9 +34,9 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 177px;
-    height: 39px;
-    margin-right: 25px;
+    width: 11.1rem;
+    height: 2.4rem;
+    margin-right: 1.6rem;
 }
 
 .text-user-name {
@@ -54,8 +54,8 @@ button {
 }
 
 .exit-button {
-    width: 80px;
-    height: 39px;
+    width: 5rem;
+    height: 2.4rem;
     font-size: 18px;
     font-weight: 500;
 }
@@ -69,9 +69,10 @@ button {
 
 aside {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-between; /* flex-start */
+    /* gap:13.8rem; */
     width: auto;
-    height: 195px;
+    height: 12.2rem;
     margin-top: 4.3rem;
     background-color: #F4F4F4;
 }
@@ -80,10 +81,9 @@ aside {
     display: flex;
     align-items: center;
     justify-content: space-around;
-    width: 137px;
-    height: 50px;
-    margin-left: 37px;
-    margin-top: 19px;
+    width: 8.6rem;
+    height: 3.1rem;
+    margin: 1.2rem 0 0 2.3rem;
 }
 
 .filter-button:hover {
@@ -92,7 +92,7 @@ aside {
 }
 
 .text-filter-name {
-    margin-right: 12px;
+    margin-right: 0.75rem;
     font-size: 24px;
     font-weight: 600;
 }
@@ -101,16 +101,15 @@ aside {
     display: flex;
     align-items: center;
     flex-direction: column;
-    width: 792px;
-    height: 217px;
-    margin-top: 19px;
-    margin-right: 394px;
+    width: 49.5rem;
+    height: 13.6rem;
+    margin: 1.2rem 24.6rem 0 0;
 }
 
 .textarea-add-twit {
-    padding: 19px 17px;
-    width: 792px;
-    height: 87px;
+    padding: 1.2rem 1.1rem;
+    width: 49.5rem;
+    height: 5.4rem;
     border-radius: 10px;
     resize: none;
     border: solid black 2px;
@@ -118,9 +117,9 @@ aside {
 }
 
 .add-twit-button {
-    margin-top: 24px;
-    width: 166px;
-    height: 36px;
+    margin-top: 1.5rem;
+    width: 10.3rem;
+    height: 2.25rem;
     font-size: 18px;
     font-weight: 500;
 }
@@ -295,7 +294,7 @@ main {
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    width: 915px;
+    width: 57.2rem;
     background-color: white;
 }
 
@@ -303,11 +302,10 @@ article {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 714px;
-    height: 200px;
-    margin-top: 43px;
-    margin-bottom: 24px;
-    padding-right: 35px;
+    width: 44.6rem;
+    height: 12.5rem;
+    margin: 2.7rem 0 1.5rem 0;
+    padding-right: 2.2rem;
     background-color: #e5c891;
     box-shadow: 4px 2px 7px rgba(0, 0, 0, 0.25);
 }
@@ -335,16 +333,15 @@ article {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 81px;
-    height: 104px;
-    margin-bottom: 20px;
-    margin-right: 23px;
+    width: 5.1rem;
+    height: 6.5rem;
+    margin: 0 1.4rem 1.25rem 0;
 }
 
 .img-avatar {
-    width: 97px;
-    height: 97px;
-    margin-bottom: 4px;
+    width: 6.1rem;
+    height: 6.1rem;
+    margin-bottom: 0.25rem;
     border-radius: 10px;
     border: 1px solid #F6F1F1;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -358,14 +355,14 @@ article {
 .twit-information {
     display: flex;
     flex-direction: column;
-    width: 435px;
-    height: 124px;
+    width: 27.2rem;
+    height: 7.75rem;
 }
 
 .twit-text {
-    width: 435px;
-    height: 96px;
-    padding: 7px 11px;
+    width: 27.2rem;
+    height: 6rem;
+    padding: 0.4rem 0.7rem;
     resize: none;
     font-size: 13px;
     font-weight: 500;
@@ -378,21 +375,21 @@ article {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 5px;
-    width: 435px;
-    height: 30px;
+    margin-top: 0.3rem;
+    width: 27.2rem;
+    height: 1.9rem;
 }
 
 .twit-date-and-time {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 119px;
-    height: 25px;
+    width: 7.4rem;
+    height: 1.6rem;
 }
 
 .date-information {
-    margin-right: 10px;
+    margin-right: 0.63rem;
     font-size: 15px;
     font-weight: 500;
 }
@@ -406,13 +403,13 @@ article {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 117px;
-    height: 25px;
+    width: 7.3rem;
+    height: 1.6rem;
 }
 
 .edit-button {
-    width: 65px;
-    height: 24px;
+    width: 4.1rem;
+    height: 1.5rem;
     font-size: 14px;
     font-weight: 600;
 }
@@ -426,15 +423,15 @@ article {
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    width: 39px;
-    height: 25px;
-    margin-top: 1px;
+    width: 2.4rem;
+    height: 1.6rem;
+    margin-top: 0.1rem;
 }
 
 .comment-img {
     width: 23px;
     height: 23px;
-    margin-right: 2px;
+    margin-right: 0.13rem;
 }
 
 .comment-count {
@@ -443,10 +440,9 @@ article {
 }
 
 .load-button {
-    width: 206px;
-    height: 37px;
-    margin-bottom: 69px;
-    margin-top: 45px;
+    width: 12.9rem;
+    height: 2.3rem;
+    margin: 2.8rem 0 4.3rem 0;
     font-size: 24px;
     font-weight: 500;
 }
@@ -462,20 +458,20 @@ footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 69px;
+    height: 4.3rem;
     width: auto;
     background-color: rgba(32, 29, 36, 0.78);
 }
 
 .name-of-web-site {
-    margin-left: 37px;
+    margin-left: 2.3rem;
     font-size: 24px;
     font-weight: 600;
     color: white;
 }
 
 .name-of-creator {
-    margin-left: 95px;
+    margin-left: 5.9rem;
     font-size: 18px;
     font-weight: 500;
     color: white;
@@ -485,19 +481,19 @@ footer {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    width: 242px;
-    height: 48px;
+    width: 15.1rem;
+    height: 3rem;
 }
 
 .container-gmail-information {
     display: flex;
     align-items: flex-end;
-    width: 214px;
-    height: 15px;
+    width: 13.4rem;
+    height: 0.9rem;
 }
 
 .text-email {
-    margin-left: 3px;
+    margin-left: 0.2rem;
     font-size: 14px;
     font-weight: 500;
     color: white;
@@ -506,13 +502,14 @@ footer {
 .last-date-change {
     display: flex;
     align-items: center;
-    width: 214px;
-    height: 15px;
+    width: 13.4rem;
+    height: 0.9rem;
 }
 
 .text-last-date-change {
-    margin-left: 3px;
+    margin-left: 0.2rem;
     font-size: 14px;
     font-weight: 500;
     color: white;
 }
+
