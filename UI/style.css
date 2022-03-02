@@ -2,6 +2,7 @@
     box-sizing: border-box;
 }
 
+html,
 body {
     margin: 0;
     font-family: 'Rajdhani', sans-serif;
@@ -10,17 +11,23 @@ body {
 /* header */
 
 header {
+    position: fixed;
+    top:0;
+    left:0;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    width: 100vw;
     height: 69px;
-    width: auto;
-    background-color: #201D24;
-    opacity: 78%;
+    background-color: rgba(32, 29, 36, 0.78);
+    z-index: 100;
+
 }
 
 .logo {
     margin-left: 37px;
+    width:53px;
+    height: 53px;
 }
 
 .container-menu-user {
@@ -65,6 +72,7 @@ aside {
     justify-content: space-between;
     width: auto;
     height: 195px;
+    margin-top: 4.3rem;
     background-color: #F4F4F4;
 }
 
@@ -130,6 +138,156 @@ aside {
     background-color: rgba(210, 190, 250, 0.62);
 }
 
+/* контейнер фильтра */
+
+.container-filter {
+    visibility: hidden;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1.7em 3em;
+    left: 0.1rem;
+    top: 9rem;
+    width: 26rem;
+    height: 31.3rem;
+    border-radius: 10px;
+    border: 2px solid black;
+    background-color: #F9F9F9;
+}
+
+.show-block {
+    visibility: visible;
+}
+
+.title-with-container {
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    height: fit-content;
+}
+
+.title-with-container>span {
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.choose-user-name {
+    width: 6.8rem;
+    height: 2.1rem;
+    border-radius: 10px;
+    border: 2px solid black;
+}
+
+.choose-date {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.choose-date>input {
+    width: 9rem;
+    height: 2.1rem;
+    padding: 0 0.5rem;
+    border-radius: 10px;
+    border: 2px solid black;
+}
+
+.choose-date>.iconify {
+    margin: 0 0.5rem;
+    font-size: 20px;
+}
+
+.context-input {
+    width: 20.3rem;
+    height: 2.1rem;
+    padding: 0 0.5rem;
+    border-radius: 10px;
+    border: 2px solid black;
+}
+
+.add-tag {
+    display: flex;
+    justify-content: space-between;
+    width: 20.3rem;
+}
+
+.input-tag {
+    width: 5.5rem;
+    height: 2.1rem;
+    padding: 0 0.5rem;
+    border-radius: 10px;
+    border: 2px solid black;
+}
+
+.button-add-tag {
+    height: 0;
+    background-color: transparent;
+    box-shadow: 0 0 0;
+    font-size: 34px;
+    padding: 0 6rem 0.1rem 0rem;
+}
+
+.button-add-tag:hover {
+    color: #A382E5;
+    cursor: pointer;
+}
+
+.save-button {
+    width: 5.25rem;
+    height: 2rem;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.save-button:hover {
+    background-color: #EEDECC;
+    cursor: pointer;
+}
+
+.container-filter>hr {
+    width: 20.3rem;
+}
+
+.tags-list {
+    display: flex;
+    justify-content: flex-start;
+    gap: 1rem;
+    width: 20.3rem;
+    margin-bottom: 0.5rem;
+}
+
+.tags-list>div {
+    width: 4.3rem;
+    height: 1.5rem;
+    padding: 0.2rem 1rem 1rem 1rem;
+    text-align: center;
+    font-weight: 600;
+    font-size: 14px;
+    border-radius: 20px;
+    background-color: #A382E5;
+    box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.25);
+}
+
+.delete-small-button {
+    position: relative;
+    bottom: 1.6rem;
+    left: 1.8rem;
+    background-color: transparent;
+    box-shadow: 0 0 0;
+    opacity: 0;
+}
+
+.delete-small-button > img {
+    width:15px;
+    height: 15px;
+}
+
+.delete-small-button:hover {
+    opacity: 100%;
+    cursor: pointer;
+}
+
 /* Main */
 
 main {
@@ -158,7 +316,7 @@ article {
     position: relative;
     left: 625px;
     bottom: 78px;
-    background-color: transparent ;
+    background-color: transparent;
     box-shadow: 0 0 0;
     opacity: 0;
 }
@@ -169,7 +327,7 @@ article {
 }
 
 .delete-img {
-    width:35px;
+    width: 35px;
     height: 35px;
 }
 
@@ -247,7 +405,7 @@ article {
 .edit-and-comment {
     display: flex;
     justify-content: space-between;
-    align-items:center;
+    align-items: center;
     width: 117px;
     height: 25px;
 }
@@ -266,7 +424,7 @@ article {
 
 .twit-comments {
     display: flex;
-    align-items:center;
+    align-items: center;
     justify-content: flex-end;
     width: 39px;
     height: 25px;
@@ -296,4 +454,65 @@ article {
 .load-button:hover {
     background-color: #EEDECC;
     cursor: pointer;
+}
+
+/* footer */
+
+footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 69px;
+    width: auto;
+    background-color: rgba(32, 29, 36, 0.78);
+}
+
+.name-of-web-site {
+    margin-left: 37px;
+    font-size: 24px;
+    font-weight: 600;
+    color: white;
+}
+
+.name-of-creator {
+    margin-left: 95px;
+    font-size: 18px;
+    font-weight: 500;
+    color: white;
+}
+
+.contacts {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 242px;
+    height: 48px;
+}
+
+.container-gmail-information {
+    display: flex;
+    align-items: flex-end;
+    width: 214px;
+    height: 15px;
+}
+
+.text-email {
+    margin-left: 3px;
+    font-size: 14px;
+    font-weight: 500;
+    color: white;
+}
+
+.last-date-change {
+    display: flex;
+    align-items: center;
+    width: 214px;
+    height: 15px;
+}
+
+.text-last-date-change {
+    margin-left: 3px;
+    font-size: 14px;
+    font-weight: 500;
+    color: white;
 }
