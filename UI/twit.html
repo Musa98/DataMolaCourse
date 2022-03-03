@@ -1,12 +1,146 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <title>SocialNote</title>
 </head>
+
 <body>
-    
+
+    <header>
+        <img class="logo" src="img/union.svg" alt="logo">
+        <div class="container-menu-user twit-container-menu-user">
+            <span class="text-user-name">Musa</span>
+            <a href="main.html">
+                <button class="main-button">
+                    <span class="iconify" data-icon="mdi:home-import-outline"></span>
+                    <span>Main</span>
+                </button>
+            </a>
+
+            <button class="exit-button">Exit</button>
+        </div>
+    </header>
+    <div class="container-main">
+        <main class="margin-main">
+            <article class="article-twit-page">
+                <button class="delete-button">
+                    <img class="delete-img" src="img/delete.svg" alt="delete">
+                </button>
+                <div class="avatar">
+                    <img class="img-avatar" src="img/avatar.png" alt="avatar" />
+                    <span class="name-avatar">Musa</span>
+                </div>
+                <div class="twit-information">
+                    <textarea class="twit-text" maxlength="280" readonly>Hello, it is my twit</textarea>
+                    <div class="twit-dates">
+                        <div class="twit-date-and-time">
+                            <img src="img/calendar.svg">
+                            <span class="date-information">22.01.22</span>
+                            <span class="time-information">18:20</span>
+                        </div>
+                        <div class="edit-and-comment">
+                            <button class="edit-button">Edit</button>
+                            <div class="twit-comments">
+                                <img class="comment-img" src="img/comment.svg" alt="comment">
+                                <span class="comment-count">3</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <article class="twit-comment-page">
+                <span>Comments</span>
+                <hr>
+                <div class="user-comment">
+                    <img class="avatar-comment" src="img/avatar.png" alt="avatar-comment">
+                    <div class="user-comment-information">
+                        <div class="twit-dates comment-dates">
+                            <span>Musa</span>
+                            <div class="twit-date-and-time comment-calendar">
+                                <img src="img/calendar.svg">
+                                <span class="date-information date-information-comment">22.01.22</span>
+                                <span class="time-information time-information-comment">18:20</span>
+                            </div>
+                        </div>
+                        <textarea class="twit-text" maxlength="280" readonly>It is my first comment</textarea>
+                    </div>
+                </div>
+                <div class="user-comment">
+                    <img class="avatar-comment" src="img/avatar.png" alt="avatar-comment">
+                    <div class="user-comment-information">
+                        <div class="twit-dates comment-dates">
+                            <span>Musa</span>
+                            <div class="twit-date-and-time comment-calendar">
+                                <img src="img/calendar.svg">
+                                <span class="date-information date-information-comment">22.01.22</span>
+                                <span class="time-information time-information-comment">18:20</span>
+                            </div>
+                        </div>
+                        <textarea class="twit-text" maxlength="280" readonly>I am very exited!</textarea>
+                    </div>
+                </div>
+                <div class="user-comment">
+                    <img class="avatar-comment" src="img/avatar2.png" alt="avatar-comment">
+                    <div class="user-comment-information">
+                        <div class="twit-dates comment-dates">
+                            <span>Alex</span>
+                            <div class="twit-date-and-time comment-calendar">
+                                <img src="img/calendar.svg">
+                                <span class="date-information date-information-comment">22.01.22</span>
+                                <span class="time-information time-information-comment">18:20</span>
+                            </div>
+                        </div>
+                        <textarea class="twit-text" maxlength="280" readonly>I think no</textarea>
+                    </div>
+                </div>
+                <div class="add-user-comment">
+                    <img class="avatar-comment" src="img/avatar.png" alt="avatar-comment">
+                    <div class="user-comment-information">
+                        <div class="twit-dates comment-dates">
+                            <span>Musa</span>
+                        </div>
+                        <textarea class="twit-text add-comment-input" maxlength="280" placeholder="Add comment..."></textarea>
+                        <button class="button-add-comment">Add comment</button>
+                    </div>
+                </div>
+            </article>
+        </main>
+    </div>
+    <footer>
+        <span class="name-of-web-site">SocialNote</span>
+        <span class="name-of-creator">Creator: Musa</span>
+        <div class="contacts">
+            <div class="container-gmail-information">
+                <img src="img/email.svg" alt="email">
+                <span class="text-email">Gmail: gsunnymus@gmail.com</span>
+            </div>
+            <div class="last-date-change">
+                <img src="img/white-calendar.svg">
+                <span class="text-last-date-change">22.01.22</span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://code.iconify.design/2/2.1.2/iconify.min.js"></script>
+    <script>
+        var btn = document.querySelector('.filter-button');
+        btn.onclick = function (e) {
+            var element = document.querySelector(".container-filter");
+            if (element.classList.contains("show-block")) {
+                element.classList.remove("show-block");
+            } else {
+                element.classList.add("show-block");
+            }
+        }
+    </script>
+
 </body>
+
 </html>
