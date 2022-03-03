@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <title>SocialNote</title>
+</head>
+
+<body>
+
+    <header>
+        <img class="logo" src="img/union.svg" alt="logo">
+        <div class="container-menu-user">
+            <span class="text-user-name">Musa</span>
+            <button class="exit-button">Exit</button>
+        </div>
+    </header>
+    <aside>
+            <button class="filter-button">
+                <span class="iconify" data-icon="mdi:tune-variant"></span>
+                <span class="text-filter-name">Filter</span>
+            </button>
+        <div class="container-add-twit">
+            <textarea class="textarea-add-twit" placeholder="Add twit..." maxlength="280"></textarea>
+            <button class="add-twit-button">Add twit</button>
+        </div>
+    </aside>
+    <div class="container-main">
+        <main>
+            <form class="container-filter">
+                <div class="title-with-container">
+                    <span>User</span>
+                    <select class="choose-user-name"></select>
+                </div>
+                <div class="title-with-container">
+                    <span>Date</span>
+                    <div class="choose-date">
+                        <input type="date">
+                        <span class="iconify" data-icon="mdi:minus"></span>
+                        <input type="date">
+                    </div>
+                </div>
+                <div class="title-with-container">
+                    <span>Context</span>
+                    <input class="context-input">
+                </div>
+                <div class="title-with-container">
+                    <span>Tag</span>
+                    <div class="add-tag">
+                        <input class="input-tag">
+                        <button class="button-add-tag"><span class="iconify"
+                                data-icon="mdi:plus-circle-outline"></span></button>
+                        <button class="save-button">Save</button>
+                    </div>
+                </div>
+                <hr color="black" size="1px">
+                <div class="tags-list">
+                    <div>
+                        <span>Car</span>
+                        <button class="delete-small-button">
+                            <img class="delete-img" src="img/delete.svg" alt="delete">
+                        </button>
+                    </div>
+                    <div>
+                        <span>House</span>
+                        <button class="delete-small-button">
+                            <img class="delete-img" src="img/delete.svg" alt="delete">
+                        </button>
+                    </div>
+                    <div>
+                        <span>Tree</span>
+                        <button class="delete-small-button">
+                            <img class="delete-img" src="img/delete.svg" alt="delete">
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <article>
+                <button class="delete-button">
+                    <img class="delete-img" src="img/delete.svg" alt="delete">
+                </button>
+                <div class="avatar">
+                    <img class="img-avatar" src="img/avatar.png" alt="avatar" />
+                    <span class="name-avatar">Musa</span>
+                </div>
+                <div class="twit-information">
+                    <textarea class="twit-text" maxlength="280" readonly>Hello, it is my twit</textarea>
+                    <div class="twit-dates">
+                        <div class="twit-date-and-time">
+                            <img src="img/calendar.svg">
+                            <span class="date-information">22.01.22</span>
+                            <span class="time-information">18:20</span>
+                        </div>
+                        <div class="edit-and-comment">
+                            <button class="edit-button">Edit</button>
+                            <div class="twit-comments">
+                                <img class="comment-img" src="img/comment.svg" alt="comment">
+                                <span class="comment-count">3</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+            <article>
+                <button class="delete-button">
+                    <img class="delete-img" src="img/delete.svg" alt="delete">
+                </button>
+                <div class="avatar">
+                    <img class="img-avatar" src="img/avatar.png" alt="avatar" />
+                    <span class="name-avatar">Musa</span>
+                </div>
+                <div class="twit-information">
+                    <textarea class="twit-text" maxlength="280" readonly>Hello, it is my twit</textarea>
+                    <div class="twit-dates">
+                        <div class="twit-date-and-time">
+                            <img src="img/calendar.svg">
+                            <span class="date-information">22.01.22</span>
+                            <span class="time-information">18:20</span>
+                        </div>
+                        <div class="edit-and-comment">
+                            <button class="edit-button">Edit</button>
+                            <div class="twit-comments">
+                                <img class="comment-img" src="img/comment.svg" alt="comment">
+                                <span class="comment-count">3</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+            <article>
+                <button class="delete-button">
+                    <img class="delete-img" src="img/delete.svg" alt="delete">
+                </button>
+                <div class="avatar">
+                    <img class="img-avatar" src="img/avatar.png" alt="avatar" />
+                    <span class="name-avatar">Musa</span>
+                </div>
+                <div class="twit-information">
+                    <textarea class="twit-text" maxlength="280" readonly>Hello, it is my twit</textarea>
+                    <div class="twit-dates">
+                        <div class="twit-date-and-time">
+                            <img src="img/calendar.svg">
+                            <span class="date-information">22.01.22</span>
+                            <span class="time-information">18:20</span>
+                        </div>
+                        <div class="edit-and-comment">
+                            <button class="edit-button">Edit</button>
+                            <div class="twit-comments">
+                                <img class="comment-img" src="img/comment.svg" alt="comment">
+                                <span class="comment-count">3</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+            <article>
+                <button class="delete-button">
+                    <img class="delete-img" src="img/delete.svg" alt="delete">
+                </button>
+                <div class="avatar">
+                    <img class="img-avatar" src="img/avatar.png" alt="avatar" />
+                    <span class="name-avatar">Musa</span>
+                </div>
+                <div class="twit-information">
+                    <textarea class="twit-text" maxlength="280" readonly>Hello, it is my twit</textarea>
+                    <div class="twit-dates">
+                        <div class="twit-date-and-time">
+                            <img src="img/calendar.svg">
+                            <span class="date-information">22.01.22</span>
+                            <span class="time-information">18:20</span>
+                        </div>
+                        <div class="edit-and-comment">
+                            <button class="edit-button">Edit</button>
+                            <div class="twit-comments">
+                                <img class="comment-img" src="img/comment.svg" alt="comment">
+                                <span class="comment-count">3</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+            <article>
+                <button class="delete-button">
+                    <img class="delete-img" src="img/delete.svg" alt="delete">
+                </button>
+                <div class="avatar">
+                    <img class="img-avatar" src="img/avatar.png" alt="avatar" />
+                    <span class="name-avatar">Musa</span>
+                </div>
+                <div class="twit-information">
+                    <textarea class="twit-text" maxlength="280" readonly>Hello, it is my twit</textarea>
+                    <div class="twit-dates">
+                        <div class="twit-date-and-time">
+                            <img src="img/calendar.svg">
+                            <span class="date-information">22.01.22</span>
+                            <span class="time-information">18:20</span>
+                        </div>
+                        <div class="edit-and-comment">
+                            <button class="edit-button">Edit</button>
+                            <div class="twit-comments">
+                                <img class="comment-img" src="img/comment.svg" alt="comment">
+                                <span class="comment-count">3</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+            <article>
+                <button class="delete-button">
+                    <img class="delete-img" src="img/delete.svg" alt="delete">
+                </button>
+                <div class="avatar">
+                    <img class="img-avatar" src="img/avatar.png" alt="avatar" />
+                    <span class="name-avatar">Musa</span>
+                </div>
+                <div class="twit-information">
+                    <textarea class="twit-text" maxlength="280" readonly>Hello, it is my twit</textarea>
+                    <div class="twit-dates">
+                        <div class="twit-date-and-time">
+                            <img src="img/calendar.svg">
+                            <span class="date-information">22.01.22</span>
+                            <span class="time-information">18:20</span>
+                        </div>
+                        <div class="edit-and-comment">
+                            <button class="edit-button">Edit</button>
+                            <div class="twit-comments">
+                                <img class="comment-img" src="img/comment.svg" alt="comment">
+                                <span class="comment-count">3</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+            <article>
+                <button class="delete-button">
+                    <img class="delete-img" src="img/delete.svg" alt="delete">
+                </button>
+                <div class="avatar">
+                    <img class="img-avatar" src="img/avatar.png" alt="avatar" />
+                    <span class="name-avatar">Musa</span>
+                </div>
+                <div class="twit-information">
+                    <textarea class="twit-text" maxlength="280" readonly>Hello, it is my twit</textarea>
+                    <div class="twit-dates">
+                        <div class="twit-date-and-time">
+                            <img src="img/calendar.svg">
+                            <span class="date-information">22.01.22</span>
+                            <span class="time-information">18:20</span>
+                        </div>
+                        <div class="edit-and-comment">
+                            <button class="edit-button">Edit</button>
+                            <div class="twit-comments">
+                                <img class="comment-img" src="img/comment.svg" alt="comment">
+                                <span class="comment-count">3</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+            <article>
+                <button class="delete-button">
+                    <img class="delete-img" src="img/delete.svg" alt="delete">
+                </button>
+                <div class="avatar">
+                    <img class="img-avatar" src="img/avatar.png" alt="avatar" />
+                    <span class="name-avatar">Musa</span>
+                </div>
+                <div class="twit-information">
+                    <textarea class="twit-text" maxlength="280" readonly>Hello, it is my twit</textarea>
+                    <div class="twit-dates">
+                        <div class="twit-date-and-time">
+                            <img src="img/calendar.svg">
+                            <span class="date-information">22.01.22</span>
+                            <span class="time-information">18:20</span>
+                        </div>
+                        <div class="edit-and-comment">
+                            <button class="edit-button">Edit</button>
+                            <div class="twit-comments">
+                                <img class="comment-img" src="img/comment.svg" alt="comment">
+                                <span class="comment-count">3</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+            <article>
+                <button class="delete-button">
+                    <img class="delete-img" src="img/delete.svg" alt="delete">
+                </button>
+                <div class="avatar">
+                    <img class="img-avatar" src="img/avatar.png" alt="avatar" />
+                    <span class="name-avatar">Musa</span>
+                </div>
+                <div class="twit-information">
+                    <textarea class="twit-text" maxlength="280" readonly>Hello, it is my twit</textarea>
+                    <div class="twit-dates">
+                        <div class="twit-date-and-time">
+                            <img src="img/calendar.svg">
+                            <span class="date-information">22.01.22</span>
+                            <span class="time-information">18:20</span>
+                        </div>
+                        <div class="edit-and-comment">
+                            <button class="edit-button">Edit</button>
+                            <div class="twit-comments">
+                                <img class="comment-img" src="img/comment.svg" alt="comment">
+                                <span class="comment-count">3</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+            <article>
+                <button class="delete-button">
+                    <img class="delete-img" src="img/delete.svg" alt="delete">
+                </button>
+                <div class="avatar">
+                    <img class="img-avatar" src="img/avatar.png" alt="avatar" />
+                    <span class="name-avatar">Musa</span>
+                </div>
+                <div class="twit-information">
+                    <textarea class="twit-text" maxlength="280" readonly>Hello, it is my twit</textarea>
+                    <div class="twit-dates">
+                        <div class="twit-date-and-time">
+                            <img src="img/calendar.svg">
+                            <span class="date-information">22.01.22</span>
+                            <span class="time-information">18:20</span>
+                        </div>
+                        <div class="edit-and-comment">
+                            <button class="edit-button">Edit</button>
+                            <div class="twit-comments">
+                                <img class="comment-img" src="img/comment.svg" alt="comment">
+                                <span class="comment-count">3</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <button class="load-button">Load more</button>
+        </main>
+    </div>
+    <footer>
+        <span class="name-of-web-site">SocialNote</span>
+        <span class="name-of-creator">Creator: Musa</span>
+        <div class="contacts">
+            <div class="container-gmail-information">
+                <img src="img/email.svg" alt="email">
+                <span class="text-email">Gmail: gsunnymus@gmail.com</span>
+            </div>
+            <div class="last-date-change">
+                <img src="img/white-calendar.svg">
+                <span class="text-last-date-change">22.01.22</span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://code.iconify.design/2/2.1.2/iconify.min.js"></script>
+    <script>
+        var btn = document.querySelector('.filter-button');
+        btn.onclick = function (e) {
+            var element = document.querySelector(".container-filter");
+            if (element.classList.contains("show-block")) {
+                element.classList.remove("show-block");
+            } else {
+                element.classList.add("show-block");
+            }
+        }
+    </script>
+
+</body>
+
+</html>

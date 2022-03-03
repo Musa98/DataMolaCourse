@@ -6,6 +6,9 @@
 
 ***
 
-## :star2: mockups
->*mockups contain desktop and mobile frames with link on figma*
+## :star: TwitTask
+>*Twittask contain main project*
+
+## :star2: ExtraTasks
+>*Extratasks contain additional tasks*
 
