@@ -1,0 +1,426 @@
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    font-family: 'Rajdhani', sans-serif;
+    background-color:rgb(227, 229, 233);
+}
+
+.avia-block-container{
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin-top:4rem;
+}
+
+.avia-block{
+    position: relative;
+    display: flex;
+    width:45.5rem;
+    height: 17.5rem;
+    margin:1rem;
+    border-radius:10px;
+    background-color: white;
+    box-shadow: 4px 2px 7px rgba(0, 0, 0, 0.25);
+}
+
+.note {
+    position: absolute;
+    top:-0.6rem;
+    left:0.7rem;
+    width:7.6rem;
+    height: 1.4rem;
+    padding-top: 0.2rem;
+    text-align: center;
+    font-size: 0.8rem;
+    border-radius:10px;
+    font-weight: 600;
+    color:white;
+    background-color:rgb(32, 189, 32);
+}
+
+.purple{
+    background-color:rgb(209, 56, 209);
+}
+
+.cost-ticket-block{
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+    width:12.7rem;
+    height: 17.5rem;
+    padding-top: 2rem;
+    border-right:1px solid rgba(0, 0, 0, 0.212);
+}
+
+.cost-ticket-block > span {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 0.8rem;
+}
+
+.cost-ticket-block > button{
+    width:10.8rem;
+    height: 2.9rem;
+    border: none;
+    outline: none;
+    border-radius:5px;
+    font-size: 1.2rem;
+    background-color:rgb(250, 136, 6);
+    color:white;
+}
+
+.cost-ticket-block > button:hover{
+    background-color:rgb(226, 124, 8);
+    cursor: pointer;
+}
+
+.way-block{
+    display: flex;
+    flex-direction: column;
+    width:32.6rem;
+    height: 17.5rem;
+}
+
+.icons-collection{
+    display: flex;
+    justify-content: space-between;
+    align-items:center;
+    padding: 1rem;
+}
+
+.img-container{
+    position: relative;
+    display: flex;
+}
+
+.img-container  img {
+    position: relative;
+    width: 2.3rem;
+    height: 2.3rem;
+    border-radius: 40px;
+    margin-left: 0.5rem;
+}
+
+.airflot:hover .message{
+    display: block;
+    cursor: pointer;
+}
+
+.belavia:hover .message{
+    display: block;
+    cursor: pointer;
+}
+
+.message{
+    display: none;
+    position: absolute;
+    top:0.2rem;
+    left:-1.5rem;
+    width:6rem;
+    height:2rem;
+    padding: 0.5rem;
+    font-size:0.8rem;
+    text-align: center;
+    background-color:black;
+    border-radius:5px;
+    color:white;
+    animation-name: message-move;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+    z-index: 1;
+}
+
+.message-1 {
+    left:1.5rem;
+}
+
+.message-2 {
+    left:-2.3rem;
+}
+
+.message-3{
+    width:9rem;
+    left: 2.8rem;
+    top:3rem;
+}
+
+.message-4{
+    width:9rem;
+    left:-3.8rem;
+    font-weight: 500;
+}
+
+.message-5{
+    width:9rem;
+    left:11rem;
+    font-weight: 500;
+}
+
+.message-6{
+    left:0.4rem;
+}
+
+.message-7{
+    left:3.7rem;
+}
+
+.icons-container{
+    position: relative;
+    display:flex;
+}
+
+.icons-container > .iconify {
+    font-size: 1.5rem;
+    margin-right: 0.2rem;
+}
+
+.icons-container > .subscribe > .iconify {
+    font-size: 1.5rem;
+    margin-right: 0.2rem;
+}
+
+.icons-container > .subscribe:hover{
+    color:rgb(47, 47, 243);
+    cursor: pointer;
+}
+
+.subscribe:hover .message{
+    display: block;
+    cursor: pointer;
+}
+
+.icons-container > .iconify:hover{
+    color:rgb(47, 47, 243);
+    cursor: pointer;
+}
+
+.circle{
+    position: relative;
+    width:1.5rem;
+    height:1.5rem;
+    padding-top:0.25rem;
+    margin-left:0.2rem;
+    text-align: center;
+    border-radius:40px;
+    background-color:white;
+    box-shadow: 0 2px 7px rgba(0, 0, 0, 0.25);
+    color:rgb(202, 10, 10);
+}
+
+.circle-margin {
+    margin-right:1rem;
+}
+
+.circle:hover .message{
+    display: block;
+    cursor: pointer;
+}
+
+.way-information {
+    display: flex;
+    align-items: center;
+    padding-left: 1.6rem;
+    margin-bottom: 1rem;
+}
+
+.date-and-time {
+    display: flex;
+    flex-direction: column;
+}
+
+.time{
+    font-size: 1.7rem;
+    font-weight: 500;
+}
+
+.town{
+    font-size: 0.7rem;
+    color:gray;
+}
+
+.date{
+    font-size: 0.7rem;
+    color:gray;
+}
+
+.graphic-way{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width:15.9rem;
+    height: 3.8rem;
+    margin-left: 2.5rem;
+}
+
+.plane{
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+}
+.plane-container{
+    height: 0;
+}
+.plane-container:hover .message{
+    display: block;
+    cursor: pointer;
+}
+.plane .iconify:hover {
+    color:rgb(226, 124, 8);
+    cursor: pointer;
+}
+
+.plane span{
+    font-size: 0.7rem;
+    color:gray;
+}
+
+.container-line {
+    position: relative;
+    display: flex;
+    align-items:center;
+}
+
+.container-line:hover .message{
+    display: block;
+    cursor: pointer;
+}
+
+.line{
+    height: 0.3rem;
+    border-radius:10px;
+    background-color:rgb(184, 184, 184);
+}
+
+.line:hover{
+    background-color:white;
+    border: 1px solid rgb(226, 124, 8);
+    cursor: pointer;
+}
+
+.line-1{
+    width:2rem;
+}
+
+.line-2{
+    width:9rem;
+    height: 0.05rem;
+}
+
+.line-3{
+    width:5.1rem
+}
+
+.line-4{
+    width:8.1rem;
+}
+
+.line-5{
+    width:6rem;
+    height: 0.05rem;
+}
+
+.line-6{
+    width:2rem;
+}
+
+.line-7{
+    width:5rem;
+}
+
+.line-8{
+    width:3rem;
+    height: 0.05rem;
+}
+
+.line-9{
+    width:8.1rem;
+}
+
+.line-10{
+    width: 8.1rem;
+}
+
+.line-11{
+    width: 4rem;
+    height:0.05rem;
+}
+
+.line-12{
+    width:4rem;
+}
+
+.abbr {
+    position: relative;
+    display:flex;
+    justify-content: space-between;
+    font-size: 0.65rem;
+    font-weight: 600;
+    color:rgb(39, 39, 209);
+}
+
+.abbr  span:hover{
+    color:rgb(226, 124, 8);
+    cursor: pointer;
+}
+
+.abbr-1{
+    margin-right: 3rem;
+}
+
+.abbr-2{
+    margin-left: 6rem;
+}
+
+.abbr-3{
+    margin-right: 3.3rem;
+}
+
+.abbr-4{
+    margin-left:4.3rem;
+}
+
+.reverse{
+    align-items: flex-end;
+    margin-left:2rem;
+}
+
+.way-block > hr {
+    width:30rem;
+    margin-bottom: 1.5rem;
+}
+
+.cost-ticket-block > .important-note{
+    text-align: center;
+    font-size: 0.9rem;
+    color:red;
+    font-weight: 600;
+    margin-top: 1rem;
+}
+
+@keyframes message-move {
+    0%{
+        top:0.2rem;
+        opacity: 0%;
+    }
+
+    100%{
+        top:-2rem;
+        opacity: 100%;
+    }
+}
+
+@keyframes message-move-2 {
+    0%{
+        top:0.2rem;
+        opacity: 0%;
+    }
+
+    100%{
+        top:-1rem;
+        opacity: 100%;
+    }
+}

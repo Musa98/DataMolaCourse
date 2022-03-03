@@ -1,0 +1,79 @@
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    font-family: 'Rajdhani', sans-serif;
+}
+
+.black-background{
+    position:fixed;
+    height:100%;
+    width:100%;
+    left:0;
+    top:0;
+    background:rgba(0,0,0,0.5);
+}
+
+.model-view{
+    position:absolute;
+    display: flex;
+    flex-direction: column;
+    height:15.4rem;
+    width:33.8rem;
+    left:45%;
+    top:50%;
+    margin: -150px 0 0 -150px;
+    background:#fff;
+}
+
+.title-model-view{
+    display: flex;
+    justify-content: space-between;
+    align-items:center;
+}
+
+.title{
+    margin: 1rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.title-model-view > .iconify {
+    margin: 1rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.text-model-view {
+    padding: 1rem;
+    border-top:1px solid rgba(0, 0, 0, 0.288);
+    border-bottom:1px solid rgba(0, 0, 0, 0.288);
+}
+
+.container-buttons-model-view {
+    display: flex;
+    justify-content: flex-end;
+    padding: 1rem;
+}
+
+.container-buttons-model-view > button {
+    height: 2rem;
+    font-weight: 600;
+    border: none; 
+    outline: none;
+    border-radius:5px;
+    color:white;
+    padding: 0.5rem;
+}
+
+.close-button{
+    background-color:rgb(100, 100, 100);
+    margin-right: 0.5rem;
+}
+
+.save-button{
+    background-color:rgb(12, 104, 209);
+}
