@@ -1,6 +1,13 @@
 function task(array) {
     let sum = 0;
 
+    if (array.length < 1 || array.length > 3 * (10 ** 4)) return 'Incorrect length';
+    
+    for (let i = 0; i < array.length; i++){
+        if (array[i] < 0 || array[i] > 10 ** 4) return 'Incorrect value';
+    }
+
+
     for (let i = 0, j = i + 1; j < array.length; j++) {
 
         if (array[j] > array[i]) {
