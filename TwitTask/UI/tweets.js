@@ -236,11 +236,11 @@ const module = (function () {
                         for (let i = 0; i < obj[key].length; i++) {
                             obj[key][i] = obj[key][i].replace(/\s+/g, ' ').trim();
                             if (obj[key][i].substring(0, 1) !== '#') return false;
-                            if (!element['text'].includes(obj[key][i])) return false;
+                            if (!element['text'].toLowerCase().includes(obj[key][i].toLowerCase())) return false;
                         }
                         break;
                     case 'text':
-                        if (!element[key].includes(obj[key])) return false;
+                        if (!element[key].toLowerCase().includes(obj[key].toLowerCase())) return false;
                         break;
                     default:
                         throw new Error('Incorrect object!');
@@ -270,13 +270,12 @@ const module = (function () {
     }
 
     const getTweet = function (id) {
-        let array = tweets;
 
         if (typeof id !== 'string') {
             throw new Error('Type is not string!')
         }
 
-        return array.find(element => element.id === id);
+        return tweets.find(element => element.id === id);
     }
 
     const validateTweet = function (tweet) {
@@ -446,7 +445,7 @@ try {
         dateFrom: new Date('2022-03-09T17:42:16'),
         dateTo: new Date('2022-03-09T18:32:23'),
         hashtags: ['#js', '#Start'],
-        text: ['The Javascript language'],
+        text: 'The Javascript language',
     }));
 
     console.log(module.getTweet('2'));
