@@ -2,8 +2,8 @@ function task(array) {
     let sum = 0;
 
     if (array.length < 1 || array.length > 3 * (10 ** 4)) return 'Incorrect length';
-    
-    for (let i = 0; i < array.length; i++){
+
+    for (let i = 0; i < array.length; i++) {
         if (array[i] < 0 || array[i] > 10 ** 4) return 'Incorrect value';
     }
 
@@ -19,27 +19,20 @@ function task(array) {
                 continue;
             }
 
-         } else if (i === 0){
-             for (let k = 1; k < array.length; k++) {
-               if(array[k] < array[i] && array[k] < array[k+1]){
-                     i = j = k;
-                     break;
-                 }
-                
-             }
-         } else if (array[i] === Math.max(...prices)){
+        } else if (array[i] > array[j]) {
             i = j;
             continue;
-         }
+        }
     }
 
     return sum;
 }
 
 //Test Arrays
+let prices = [7, 1, 5, 3, 6, 4];
 // let prices = [1,2,3,4,5,6,7];
 // let prices = [7,7,7,1,2,3];
-let prices = [7,1,5,3,6,4];
+// let prices = [3,2,6,5,0,3];
 // let prices = [1,2,3,3,3,1,2];
 // let prices = [7,6,5,4,5,6,7];
 
