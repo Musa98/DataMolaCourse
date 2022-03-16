@@ -252,7 +252,7 @@ const module = (function () {
     }
 
     const getTweets = function (skip = 0, top = 10, obj = null) { 
-        let array = tweets;
+        let array = tweets.slice();
 
         if (typeof skip !== 'number' || typeof top !== 'number') {
             throw new Error('Type is not number!');
@@ -264,9 +264,7 @@ const module = (function () {
             array = _filterTwits(array, obj);
         }
 
-        return array.sort((a, b) => Date.parse(a.createdAt) - Date.parse(b.createdAt))
-            .filter((element, index) => index > skip - 1)
-            .filter((element, index) => index <= top - 1);
+        return array.sort((a, b) => Date.parse(a.createdAt) - Date.parse(b.createdAt)).splice(skip, top);
     }
 
     const getTweet = function (id) {
