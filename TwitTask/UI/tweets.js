@@ -1,10 +1,10 @@
 /* eslint-disable linebreak-style */
+/* eslint-disable max-classes-per-file */
 /* eslint-disable no-plusplus */
 /* eslint-disable guard-for-in */
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable class-methods-use-this */
 /* eslint-disable no-underscore-dangle */
-/* eslint-disable max-classes-per-file */
 
 'use strict';
 
