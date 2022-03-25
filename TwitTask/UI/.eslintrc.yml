@@ -5,6 +5,4 @@ env:
 extends: airbnb-base/legacy
 parserOptions:
   ecmaVersion: latest
-rules: {
-
-}
+rules: {}
