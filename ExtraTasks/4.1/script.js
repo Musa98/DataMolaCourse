@@ -1,5 +1,3 @@
-// До конца не доделал, постараюсь доделать ко дню обсуждения ДЗ
-
 class Node{
     constructor(value, next = null){
         this.value = value;
@@ -8,60 +6,82 @@ class Node{
 }
 
 class List{
-    length = 0;
+    _length = 1;
 
     constructor(value){
         this.root = new Node(value);
     }
 
+    get length(){
+        return this._length;
+    }
+
     addNode(value, i){
-        let middle;
         let node = new Node(value);
         let count = 0;
         let currentNode = this.root;
 
         while(currentNode.next){
-            if (count === i){
-                middle = currentNode.next;
-                break;
-            } else if(i > count){
+
+            if(i > this._length - 1){
                 return false;
             }
-            currentNode = currentNode.next;
-            count++
-        }
 
-        this.length++;
-        currentNode.next = node;
-        currentNode.next.next = middle;
-        return true;
-    }
+            if (count === i){
+                node.next = currentNode.next;
+                currentNode.next = node;
+                this._length++;
+                return true;
+            }
 
-    remove(i){
-        let middle;
-        let count = 0;
-        let currentNode = this.root;
-
-        while(currentNode.next){
-            if(count === i - 1){
-                middle = currentNode.next;
-                break;
-            } 
-            if(count === this.length - 1){
-                break;
-            }           
             currentNode = currentNode.next;
             count++;
         }
 
-        if(middle){
-            currentNode.next = middle;
-            this.length--;
-            return true;
-        }
-        currentNode.next = null;
-        this.length--;
+        currentNode.next = node;
+        this._length++;
         return true;
+    }
+
+    remove(i){
+        let count = 0;
+        let currentNode = this.root;
+
+        if (this._length === 1 || i + 1 > this._length){
+            return false;
+        }
+
+        if (count === i){
+            this.root = currentNode.next;
+            this._length--;
+            return true;
+        }     
+
+        while(count < this._length - 2){
+            if (count === i - 1){
+                currentNode.next = currentNode.next.next;
+                this._length--;
+                return true;
+            }    
+            currentNode = currentNode.next;
+            count++;
+        }
+
+        currentNode.next = null;
+        this._length--;
+        return true;
+    }
+
+    print(){
+        let result = [];
+        let currentNode = this.root;
+
+        while(currentNode){
+            result.push(currentNode.value);
+            currentNode = currentNode.next;
+        }
+
+        alert(result.join(','));
     }
 }
 
