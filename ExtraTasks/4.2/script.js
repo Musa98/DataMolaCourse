@@ -21,7 +21,7 @@ function curry(func) {
             return func.apply(this, args);
         } else {
             return function (...args2) {
-                return curried.apply(this, args.concat(args2));
+                return curried.apply(this, args2.concat(args));
             }
         }
     };
@@ -31,11 +31,10 @@ function curry(func) {
 function pipe(...arguments) {
     let arrFunc = arguments;
     return function (number) {
-        let result = 0;
         for (let i = 0; i < arrFunc.length; i++) {
-            result += arrFunc[i](number);
+            number = arrFunc[i](number);
         }
-        return result;
+        return number;
     }
 }
 
