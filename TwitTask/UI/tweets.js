@@ -406,7 +406,7 @@ class TweetCollection {
       for (let key in obj) {
         switch (key) {
           case 'author':
-            if (element[key] !== obj[key]) return false;
+            if (element[key].toLowerCase() !== obj[key].toLowerCase()) return false;
             break;
           case 'dateFrom':
             if (element.createdAt < Date.parse(obj[key])) return false;
@@ -512,7 +512,7 @@ class TweetCollection {
 
     if (text.length > 280) return false;
 
-    if (modifyTweet.author !== this._user) {
+    if (modifyTweet.author.toLowerCase() !== this._user.toLowerCase()) {
       return false;
     }
 
@@ -528,6 +528,10 @@ class TweetCollection {
 
     if (typeof id !== 'string') {
       throw new Error('Type is not string!');
+    }
+
+    if (this.get(id).author.toLowerCase() !== this._user.toLowerCase()) {
+      return false;
     }
 
     this._tweetsArr.forEach((element, index, array) => {
