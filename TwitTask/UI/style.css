@@ -310,7 +310,7 @@ article {
     height: 12.5rem;
     margin: 2.7rem 0 1.5rem 0;
     padding-right: 2.2rem;
-    background-color: #e5c891;
+    background: linear-gradient(0deg, rgb(216, 216, 216), rgb(242, 242, 242), rgb(212, 212, 212));
     box-shadow: 4px 2px 7px rgba(0, 0, 0, 0.25);
 }
 
