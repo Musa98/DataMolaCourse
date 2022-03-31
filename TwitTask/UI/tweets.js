@@ -584,5 +584,141 @@ class TweetCollection {
   }
 }
 
+// DOM task
+
+class HeaderView {
+  constructor(id) {
+    this.id = id;
+    if (id !== document.getElementById('user')) {
+      throw new Error('Incorrect display id!');
+    }
+  }
+
+  display(tweetFeed) {
+    if (!(tweetFeed instanceof TweetCollection)) {
+      throw new Error('Data is not correct!');
+    }
+    this.id.textContent = tweetFeed.user;
+  }
+}
+
+class TweetFeedView {
+  constructor(id) {
+    this.id = id;
+    if (id !== document.getElementById('tweet-collection')) {
+      throw new Error('Incorrect display id!');
+    }
+  }
+
+  display(tweetFeed) {
+    function parseDate(date) {
+      const dateStore = {
+        resultDate: '',
+        resultTime: ''
+      };
+      dateStore.resultDate += date.getDate() > 9 ? `${date.getDate()}.` : `0${date.getDate()}.`;
+      dateStore.resultDate += (date.getMonth() + 1) > 9 ? `${date.getMonth()}.` : `0${date.getMonth()}.`;
+      dateStore.resultDate += String(date.getFullYear()).slice(2);
+      dateStore.resultTime += date.getHours() > 9 ? `${date.getHours()}:` : `0${date.getHours()}:`;
+      dateStore.resultTime += date.getMinutes() > 9 ? `${date.getMinutes()}` : `0${date.getMinutes()}`;
+      return dateStore;
+    }
+
+    let result = '';
+    const arr = tweetFeed.getPage();
+    arr.forEach(element => {
+      result += `<article>
+                      <button class="delete-button">
+                          <img class="delete-img" src="img/delete.svg" alt="delete">
+                      </button>
+                      <div class="avatar">
+                          <img class="img-avatar" src="img/avatar.png" alt="avatar" />
+                          <span class="name-avatar">${element.author}</span>
+                      </div>
+                      <div class="twit-information">
+                          <p class="twit-text" contenteditable="false" >${element.text}</p>
+                          <div class="twit-dates">
+                              <div class="twit-date-and-time">
+                                  <img src="img/calendar.svg">
+                                  <span class="date-information">${parseDate(element.createdAt).resultDate}</span>
+                                  <span class="time-information">${parseDate(element.createdAt).resultTime}</span>
+                              </div>
+                              <div class="edit-and-comment">
+                                  <button class="edit-button">Edit</button>
+                                  <div class="twit-comments">
+                                      <img class="comment-img" src="img/comment.svg" alt="comment">
+                                      <span class="comment-count">3</span>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </article>`;
+    });
+    this.id.innerHTML = result;
+  }
+}
+
+class FilterView {
+  constructor(id) {
+    this.id = id;
+    if (id !== document.getElementById('tweet-collection')) {
+      throw new Error('Incorrect display id!');
+    }
+  }
+}
+
+class TweetView {
+  constructor(id) {
+    this.id = id;
+    if (id !== document.getElementById('tweet-collection')) {
+      throw new Error('Incorrect display id!');
+    }
+  }
+
+  display(tweetFeed, id) {
+    const tweet = tweetFeed.get(id);
+    function parseDate(date) {
+      const dateStore = {
+        resultDate: '',
+        resultTime: ''
+      };
+      dateStore.resultDate += date.getDate() > 9 ? `${date.getDate()}.` : `0${date.getDate()}.`;
+      dateStore.resultDate += (date.getMonth() + 1) > 9 ? `${date.getMonth()}.` : `0${date.getMonth()}.`;
+      dateStore.resultDate += String(date.getFullYear()).slice(2);
+      dateStore.resultTime += date.getHours() > 9 ? `${date.getHours()}:` : `0${date.getHours()}:`;
+      dateStore.resultTime += date.getMinutes() > 9 ? `${date.getMinutes()}` : `0${date.getMinutes()}`;
+      return dateStore;
+    }
+    let result = `<article>
+                      <button class="delete-button">
+                          <img class="delete-img" src="img/delete.svg" alt="delete">
+                      </button>
+                      <div class="avatar">
+                          <img class="img-avatar" src="img/avatar.png" alt="avatar" />
+                          <span class="name-avatar">${tweet.author}</span>
+                      </div>
+                      <div class="twit-information">
+                          <p class="twit-text" contenteditable="false" >${tweet.text}</p>
+                          <div class="twit-dates">
+                              <div class="twit-date-and-time">
+                                  <img src="img/calendar.svg">
+                                  <span class="date-information">${parseDate(tweet.createdAt).resultDate}</span>
+                                  <span class="time-information">${parseDate(tweet.createdAt).resultTime}</span>
+                              </div>
+                              <div class="edit-and-comment">
+                                  <button class="edit-button">Edit</button>
+                                  <div class="twit-comments">
+                                      <img class="comment-img" src="img/comment.svg" alt="comment">
+                                      <span class="comment-count">3</span>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </article>`;
+    this.id.innerHTML = result;
+  }
+}
+
 const obj = new TweetCollection(tweets);
-obj.getTweet('1');
+obj.get('1');
+// Не успел доделать, к проверке дз постараюсь сделать

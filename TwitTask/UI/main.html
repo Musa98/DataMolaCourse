@@ -15,7 +15,7 @@
     <header>
         <img class="logo" src="img/union.svg" alt="logo">
         <div class="container-menu-user">
-            <span class="text-user-name">Musa</span>
+            <span id="user" class="text-user-name">Musa</span>
             <button class="exit-button">Exit</button>
         </div>
     </header>
@@ -30,56 +30,56 @@
         </div>
     </aside>
     <div class="container-main">
-        <main>
-            <form class="container-filter">
-                <div class="title-with-container">
-                    <span>User</span>
-                    <select class="choose-user-name"></select>
+        <form class="container-filter">
+            <div class="title-with-container">
+                <span>User</span>
+                <select class="choose-user-name"></select>
+            </div>
+            <div class="title-with-container">
+                <span>Date</span>
+                <div class="choose-date">
+                    <input type="date">
+                    <span class="iconify" data-icon="mdi:minus"></span>
+                    <input type="date">
                 </div>
-                <div class="title-with-container">
-                    <span>Date</span>
-                    <div class="choose-date">
-                        <input type="date">
-                        <span class="iconify" data-icon="mdi:minus"></span>
-                        <input type="date">
-                    </div>
+            </div>
+            <div class="title-with-container">
+                <span>Context</span>
+                <input class="context-input">
+            </div>
+            <div class="title-with-container">
+                <span>Tag</span>
+                <div class="add-tag">
+                    <input class="input-tag">
+                    <button class="button-add-tag"><span class="iconify"
+                            data-icon="mdi:plus-circle-outline"></span></button>
+                    <button class="save-button">Save</button>
                 </div>
-                <div class="title-with-container">
-                    <span>Context</span>
-                    <input class="context-input">
+            </div>
+            <hr color="black" size="1px">
+            <div class="tags-list">
+                <div>
+                    <span>Car</span>
+                    <button class="delete-small-button">
+                        <img class="delete-img" src="img/delete.svg" alt="delete">
+                    </button>
                 </div>
-                <div class="title-with-container">
-                    <span>Tag</span>
-                    <div class="add-tag">
-                        <input class="input-tag">
-                        <button class="button-add-tag"><span class="iconify"
-                                data-icon="mdi:plus-circle-outline"></span></button>
-                        <button class="save-button">Save</button>
-                    </div>
+                <div>
+                    <span>House</span>
+                    <button class="delete-small-button">
+                        <img class="delete-img" src="img/delete.svg" alt="delete">
+                    </button>
                 </div>
-                <hr color="black" size="1px">
-                <div class="tags-list">
-                    <div>
-                        <span>Car</span>
-                        <button class="delete-small-button">
-                            <img class="delete-img" src="img/delete.svg" alt="delete">
-                        </button>
-                    </div>
-                    <div>
-                        <span>House</span>
-                        <button class="delete-small-button">
-                            <img class="delete-img" src="img/delete.svg" alt="delete">
-                        </button>
-                    </div>
-                    <div>
-                        <span>Tree</span>
-                        <button class="delete-small-button">
-                            <img class="delete-img" src="img/delete.svg" alt="delete">
-                        </button>
-                    </div>
+                <div>
+                    <span>Tree</span>
+                    <button class="delete-small-button">
+                        <img class="delete-img" src="img/delete.svg" alt="delete">
+                    </button>
                 </div>
-            </form>
-            <article>
+            </div>
+        </form>
+        <main id="tweet-collection">
+            <!-- <article>
                 <button class="delete-button">
                     <img class="delete-img" src="img/delete.svg" alt="delete">
                 </button>
@@ -338,7 +338,7 @@
                         </div>
                     </div>
                 </div>
-            </article>
+            </article> -->
 
             <button class="load-button">Load more</button>
         </main>
