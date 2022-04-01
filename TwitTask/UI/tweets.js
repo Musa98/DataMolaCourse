@@ -1,4 +1,7 @@
 /* eslint-disable linebreak-style */
+/* eslint-disable strict */
+/* eslint-disable no-unused-vars */
+/* eslint-disable default-param-last */
 /* eslint-disable max-classes-per-file */
 /* eslint-disable no-plusplus */
 /* eslint-disable guard-for-in */
@@ -416,7 +419,7 @@ class TweetCollection {
             break;
           case 'hashtags':
             for (let i = 0; i < obj[key].length; i++) {
-              let trimHashtag = obj[key][i].replace(/\s+/g, ' ').trim();
+              let trimHashtag = obj[key].replace(/\s+/g, ' ').trim();
               if (trimHashtag.substring(0, 1) !== '#') return false;
               if (!element.text.toLowerCase().includes(trimHashtag.toLowerCase())) return false;
             }
@@ -475,7 +478,7 @@ class TweetCollection {
       array = this._filterTwits(array, obj);
     }
 
-    return array.sort((a, b) => Date.parse(a.createdAt) - Date.parse(b.createdAt))
+    return array.sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt))//!
       .splice(skip, top);
   }
 
@@ -588,9 +591,9 @@ class TweetCollection {
 
 class HeaderView {
   constructor(id) {
-    this.id = id;
-    if (id !== document.getElementById('user')) {
-      throw new Error('Incorrect display id!');
+    this.id = document.getElementById(id);
+    if (!document.getElementById(id)) {
+      throw new Error('Incorrect id!');
     }
   }
 
@@ -604,9 +607,9 @@ class HeaderView {
 
 class TweetFeedView {
   constructor(id) {
-    this.id = id;
-    if (id !== document.getElementById('tweet-collection')) {
-      throw new Error('Incorrect display id!');
+    this.id = document.getElementById(id);
+    if (!document.getElementById(id)) {
+      throw new Error('Incorrect id!');
     }
   }
 
@@ -627,6 +630,7 @@ class TweetFeedView {
     let result = '';
     const arr = tweetFeed.getPage();
     arr.forEach(element => {
+      const text = element.text.replace(/(#\w+)/g, '<span class="hashtag">$1</span>');
       result += `<article>
                       <button class="delete-button">
                           <img class="delete-img" src="img/delete.svg" alt="delete">
@@ -636,7 +640,7 @@ class TweetFeedView {
                           <span class="name-avatar">${element.author}</span>
                       </div>
                       <div class="twit-information">
-                          <p class="twit-text" contenteditable="false" >${element.text}</p>
+                          <p class="twit-text" contenteditable="false" >${text}</p>
                           <div class="twit-dates">
                               <div class="twit-date-and-time">
                                   <img src="img/calendar.svg">
@@ -647,31 +651,90 @@ class TweetFeedView {
                                   <button class="edit-button">Edit</button>
                                   <div class="twit-comments">
                                       <img class="comment-img" src="img/comment.svg" alt="comment">
-                                      <span class="comment-count">3</span>
+                                      <span class="comment-count">${element.comments.length}</span>
                                   </div>
                               </div>
                           </div>
                       </div>
                   </article>`;
     });
-    this.id.innerHTML = result;
+    const button = '<button class="load-button">Load more</button>';
+    this.id.innerHTML = result + button;
   }
 }
 
 class FilterView {
   constructor(id) {
-    this.id = id;
-    if (id !== document.getElementById('tweet-collection')) {
-      throw new Error('Incorrect display id!');
+    this.id = document.getElementById(id);
+    if (!document.getElementById(id)) {
+      throw new Error('Incorrect id!');
     }
+  }
+
+  display(tweetFeed, filter, skip = 0, top = 10) {
+    function parseDate(date) {
+      const dateStore = {
+        resultDate: '',
+        resultTime: ''
+      };
+      dateStore.resultDate += date.getDate() > 9 ? `${date.getDate()}.` : `0${date.getDate()}.`;
+      dateStore.resultDate += (date.getMonth() + 1) > 9 ? `${date.getMonth()}.` : `0${date.getMonth()}.`;
+      dateStore.resultDate += String(date.getFullYear()).slice(2);
+      dateStore.resultTime += date.getHours() > 9 ? `${date.getHours()}:` : `0${date.getHours()}:`;
+      dateStore.resultTime += date.getMinutes() > 9 ? `${date.getMinutes()}` : `0${date.getMinutes()}`;
+      return dateStore;
+    }
+    let result = '';
+    const filterTweets = tweetFeed.getPage(skip, top, filter);
+    const username = document.querySelector('.choose-user-name');
+    const dateFrom = document.getElementById('date-from');
+    const dateTo = document.getElementById('date-to');
+    const contextInput = document.querySelector('.context-input');
+    const tag = document.querySelector('.input-tag');
+    username.value = filter.author || '';
+    dateFrom.value = filter.dateFrom?.slice(0, 10);
+    dateTo.value = filter.dateTo?.slice(0, 10);
+    contextInput.value = filter.text || '';
+    tag.value = filter.hashtags || '';
+    filterTweets.forEach(element => {
+      const text = element.text.replace(/(#\w+)/g, '<span class="hashtag">$1</span>');
+      result += `<article>
+                      <button class="delete-button">
+                          <img class="delete-img" src="img/delete.svg" alt="delete">
+                      </button>
+                      <div class="avatar">
+                          <img class="img-avatar" src="img/avatar.png" alt="avatar" />
+                          <span class="name-avatar">${element.author}</span>
+                      </div>
+                      <div class="twit-information">
+                          <p class="twit-text" contenteditable="false" >${text}</p>
+                          <div class="twit-dates">
+                              <div class="twit-date-and-time">
+                                  <img src="img/calendar.svg">
+                                  <span class="date-information">${parseDate(element.createdAt).resultDate}</span>
+                                  <span class="time-information">${parseDate(element.createdAt).resultTime}</span>
+                              </div>
+                              <div class="edit-and-comment">
+                                  <button class="edit-button">Edit</button>
+                                  <div class="twit-comments">
+                                      <img class="comment-img" src="img/comment.svg" alt="comment">
+                                      <span class="comment-count">${element.comments.length}</span>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </article>`;
+    });
+    const button = '<button class="load-button">Load more</button>';
+    this.id.innerHTML = result + button;
   }
 }
 
 class TweetView {
   constructor(id) {
-    this.id = id;
-    if (id !== document.getElementById('tweet-collection')) {
-      throw new Error('Incorrect display id!');
+    this.id = document.getElementById(id);
+    if (!document.getElementById(id)) {
+      throw new Error('Incorrect id!');
     }
   }
 
@@ -689,6 +752,9 @@ class TweetView {
       dateStore.resultTime += date.getMinutes() > 9 ? `${date.getMinutes()}` : `0${date.getMinutes()}`;
       return dateStore;
     }
+    const text = tweet.text.replace(/(#\w+)/g, '<span class="hashtag">$1</span>');
+    let viewOfComments;
+    let resultComments = '';
     let result = `<article>
                       <button class="delete-button">
                           <img class="delete-img" src="img/delete.svg" alt="delete">
@@ -698,7 +764,7 @@ class TweetView {
                           <span class="name-avatar">${tweet.author}</span>
                       </div>
                       <div class="twit-information">
-                          <p class="twit-text" contenteditable="false" >${tweet.text}</p>
+                          <p class="twit-text" contenteditable="false" >${text}</p>
                           <div class="twit-dates">
                               <div class="twit-date-and-time">
                                   <img src="img/calendar.svg">
@@ -709,16 +775,53 @@ class TweetView {
                                   <button class="edit-button">Edit</button>
                                   <div class="twit-comments">
                                       <img class="comment-img" src="img/comment.svg" alt="comment">
-                                      <span class="comment-count">3</span>
+                                      <span class="comment-count">${tweet.comments.length}</span>
                                   </div>
                               </div>
                           </div>
                       </div>
                   </article>`;
-    this.id.innerHTML = result;
+    if (!tweet.comments.length) {
+      const button = '<button class="load-button">Load more</button>';
+      this.id.innerHTML = result + button;
+      return null;
+    }
+    tweet.comments.forEach(element => {
+      resultComments += `
+        <div class="user-comment">
+            <img class="avatar-comment" src="img/avatar.png" alt="avatar-comment">
+            <div class="user-comment-information">
+                <div class="twit-dates comment-dates">
+                    <span>${element.author}</span>
+                    <div class="twit-date-and-time comment-calendar">
+                        <img src="img/calendar.svg">
+                        <span class="date-information date-information-comment">${parseDate(element.createdAt).resultDate}</span>
+                        <span class="time-information time-information-comment">${parseDate(element.createdAt).resultTime}</span>
+                    </div>
+                </div>
+                <textarea class="twit-text" maxlength="280" readonly>It is my first comment</textarea>
+            </div>
+        </div>`;
+    });
+    resultComments += `
+    <div class="add-user-comment">
+      <img class="avatar-comment" src="img/avatar.png" alt="avatar-comment">
+      <div class="user-comment-information">
+          <div class="twit-dates comment-dates">
+              <span>${tweetFeed.user}</span>
+          </div>
+          <textarea class="twit-text add-comment-input" maxlength="280" placeholder="Add comment..."></textarea>
+          <button class="button-add-comment">Add comment</button>
+      </div>
+    </div>`;
+    viewOfComments = `
+    <article class="twit-comment-page">
+      <span>Comments</span>
+      <hr>
+      ${resultComments}
+    </article>`;
+    const button = '<button class="load-button">Load more</button>';
+    this.id.innerHTML = result + viewOfComments + button;
+    return null;
   }
 }
-
-const obj = new TweetCollection(tweets);
-obj.get('1');
-// Не успел доделать, к проверке дз постараюсь сделать
