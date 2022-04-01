@@ -33,14 +33,14 @@
         <form class="container-filter">
             <div class="title-with-container">
                 <span>User</span>
-                <select class="choose-user-name"></select>
+                <input class="choose-user-name"></input>
             </div>
             <div class="title-with-container">
                 <span>Date</span>
                 <div class="choose-date">
-                    <input type="date">
+                    <input id="date-from" type="date">
                     <span class="iconify" data-icon="mdi:minus"></span>
-                    <input type="date">
+                    <input id="date-to" type="date">
                 </div>
             </div>
             <div class="title-with-container">
@@ -79,268 +79,7 @@
             </div>
         </form>
         <main id="tweet-collection">
-            <!-- <article>
-                <button class="delete-button">
-                    <img class="delete-img" src="img/delete.svg" alt="delete">
-                </button>
-                <div class="avatar">
-                    <img class="img-avatar" src="img/avatar.png" alt="avatar" />
-                    <span class="name-avatar">Musa</span>
-                </div>
-                <div class="twit-information">
-                    <p class="twit-text" contenteditable="false" >Hello, it is my twit! <span class="hashtag">#First</span></p>
-                    <div class="twit-dates">
-                        <div class="twit-date-and-time">
-                            <img src="img/calendar.svg">
-                            <span class="date-information">22.01.22</span>
-                            <span class="time-information">18:20</span>
-                        </div>
-                        <div class="edit-and-comment">
-                            <button class="edit-button">Edit</button>
-                            <div class="twit-comments">
-                                <img class="comment-img" src="img/comment.svg" alt="comment">
-                                <span class="comment-count">3</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </article>
-            <article>
-                <button class="delete-button">
-                    <img class="delete-img" src="img/delete.svg" alt="delete">
-                </button>
-                <div class="avatar">
-                    <img class="img-avatar" src="img/avatar.png" alt="avatar" />
-                    <span class="name-avatar">Musa</span>
-                </div>
-                <div class="twit-information">
-                    <p class="twit-text" contenteditable="false" >Hello, it is my twit! <span class="hashtag">#First</span></p>
-                    <div class="twit-dates">
-                        <div class="twit-date-and-time">
-                            <img src="img/calendar.svg">
-                            <span class="date-information">22.01.22</span>
-                            <span class="time-information">18:20</span>
-                        </div>
-                        <div class="edit-and-comment">
-                            <button class="edit-button">Edit</button>
-                            <div class="twit-comments">
-                                <img class="comment-img" src="img/comment.svg" alt="comment">
-                                <span class="comment-count">3</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </article>
-            <article>
-                <button class="delete-button">
-                    <img class="delete-img" src="img/delete.svg" alt="delete">
-                </button>
-                <div class="avatar">
-                    <img class="img-avatar" src="img/avatar.png" alt="avatar" />
-                    <span class="name-avatar">Musa</span>
-                </div>
-                <div class="twit-information">
-                    <p class="twit-text" contenteditable="false" >Hello, it is my twit! <span class="hashtag">#First</span></p>
-                    <div class="twit-dates">
-                        <div class="twit-date-and-time">
-                            <img src="img/calendar.svg">
-                            <span class="date-information">22.01.22</span>
-                            <span class="time-information">18:20</span>
-                        </div>
-                        <div class="edit-and-comment">
-                            <button class="edit-button">Edit</button>
-                            <div class="twit-comments">
-                                <img class="comment-img" src="img/comment.svg" alt="comment">
-                                <span class="comment-count">3</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </article>
-            <article>
-                <button class="delete-button">
-                    <img class="delete-img" src="img/delete.svg" alt="delete">
-                </button>
-                <div class="avatar">
-                    <img class="img-avatar" src="img/avatar.png" alt="avatar" />
-                    <span class="name-avatar">Musa</span>
-                </div>
-                <div class="twit-information">
-                    <p class="twit-text" contenteditable="false" >Hello, it is my twit! <span class="hashtag">#First</span></p>
-                    <div class="twit-dates">
-                        <div class="twit-date-and-time">
-                            <img src="img/calendar.svg">
-                            <span class="date-information">22.01.22</span>
-                            <span class="time-information">18:20</span>
-                        </div>
-                        <div class="edit-and-comment">
-                            <button class="edit-button">Edit</button>
-                            <div class="twit-comments">
-                                <img class="comment-img" src="img/comment.svg" alt="comment">
-                                <span class="comment-count">3</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </article>
-            <article>
-                <button class="delete-button">
-                    <img class="delete-img" src="img/delete.svg" alt="delete">
-                </button>
-                <div class="avatar">
-                    <img class="img-avatar" src="img/avatar.png" alt="avatar" />
-                    <span class="name-avatar">Musa</span>
-                </div>
-                <div class="twit-information">
-                    <p class="twit-text" contenteditable="false" >Hello, it is my twit! <span class="hashtag">#First</span></p>
-                    <div class="twit-dates">
-                        <div class="twit-date-and-time">
-                            <img src="img/calendar.svg">
-                            <span class="date-information">22.01.22</span>
-                            <span class="time-information">18:20</span>
-                        </div>
-                        <div class="edit-and-comment">
-                            <button class="edit-button">Edit</button>
-                            <div class="twit-comments">
-                                <img class="comment-img" src="img/comment.svg" alt="comment">
-                                <span class="comment-count">3</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </article>
-            <article>
-                <button class="delete-button">
-                    <img class="delete-img" src="img/delete.svg" alt="delete">
-                </button>
-                <div class="avatar">
-                    <img class="img-avatar" src="img/avatar.png" alt="avatar" />
-                    <span class="name-avatar">Musa</span>
-                </div>
-                <div class="twit-information">
-                    <p class="twit-text" contenteditable="false" >Hello, it is my twit! <span class="hashtag">#First</span></p>
-                    <div class="twit-dates">
-                        <div class="twit-date-and-time">
-                            <img src="img/calendar.svg">
-                            <span class="date-information">22.01.22</span>
-                            <span class="time-information">18:20</span>
-                        </div>
-                        <div class="edit-and-comment">
-                            <button class="edit-button">Edit</button>
-                            <div class="twit-comments">
-                                <img class="comment-img" src="img/comment.svg" alt="comment">
-                                <span class="comment-count">3</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </article>
-            <article>
-                <button class="delete-button">
-                    <img class="delete-img" src="img/delete.svg" alt="delete">
-                </button>
-                <div class="avatar">
-                    <img class="img-avatar" src="img/avatar.png" alt="avatar" />
-                    <span class="name-avatar">Musa</span>
-                </div>
-                <div class="twit-information">
-                    <p class="twit-text" contenteditable="false" >Hello, it is my twit! <span class="hashtag">#First</span></p>
-                    <div class="twit-dates">
-                        <div class="twit-date-and-time">
-                            <img src="img/calendar.svg">
-                            <span class="date-information">22.01.22</span>
-                            <span class="time-information">18:20</span>
-                        </div>
-                        <div class="edit-and-comment">
-                            <button class="edit-button">Edit</button>
-                            <div class="twit-comments">
-                                <img class="comment-img" src="img/comment.svg" alt="comment">
-                                <span class="comment-count">3</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </article>
-            <article>
-                <button class="delete-button">
-                    <img class="delete-img" src="img/delete.svg" alt="delete">
-                </button>
-                <div class="avatar">
-                    <img class="img-avatar" src="img/avatar.png" alt="avatar" />
-                    <span class="name-avatar">Musa</span>
-                </div>
-                <div class="twit-information">
-                    <p class="twit-text" contenteditable="false" >Hello, it is my twit! <span class="hashtag">#First</span></p>
-                    <div class="twit-dates">
-                        <div class="twit-date-and-time">
-                            <img src="img/calendar.svg">
-                            <span class="date-information">22.01.22</span>
-                            <span class="time-information">18:20</span>
-                        </div>
-                        <div class="edit-and-comment">
-                            <button class="edit-button">Edit</button>
-                            <div class="twit-comments">
-                                <img class="comment-img" src="img/comment.svg" alt="comment">
-                                <span class="comment-count">3</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </article>
-            <article>
-                <button class="delete-button">
-                    <img class="delete-img" src="img/delete.svg" alt="delete">
-                </button>
-                <div class="avatar">
-                    <img class="img-avatar" src="img/avatar.png" alt="avatar" />
-                    <span class="name-avatar">Musa</span>
-                </div>
-                <div class="twit-information">
-                    <p class="twit-text" contenteditable="false" >Hello, it is my twit! <span class="hashtag">#First</span></p>
-                    <div class="twit-dates">
-                        <div class="twit-date-and-time">
-                            <img src="img/calendar.svg">
-                            <span class="date-information">22.01.22</span>
-                            <span class="time-information">18:20</span>
-                        </div>
-                        <div class="edit-and-comment">
-                            <button class="edit-button">Edit</button>
-                            <div class="twit-comments">
-                                <img class="comment-img" src="img/comment.svg" alt="comment">
-                                <span class="comment-count">3</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </article>
-            <article>
-                <button class="delete-button">
-                    <img class="delete-img" src="img/delete.svg" alt="delete">
-                </button>
-                <div class="avatar">
-                    <img class="img-avatar" src="img/avatar.png" alt="avatar" />
-                    <span class="name-avatar">Musa</span>
-                </div>
-                <div class="twit-information">
-                    <p class="twit-text" contenteditable="false" >Hello, it is my twit! <span class="hashtag">#First</span></p>
-                    <div class="twit-dates">
-                        <div class="twit-date-and-time">
-                            <img src="img/calendar.svg">
-                            <span class="date-information">22.01.22</span>
-                            <span class="time-information">18:20</span>
-                        </div>
-                        <div class="edit-and-comment">
-                            <button class="edit-button">Edit</button>
-                            <div class="twit-comments">
-                                <img class="comment-img" src="img/comment.svg" alt="comment">
-                                <span class="comment-count">3</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </article> -->
-
-            <button class="load-button">Load more</button>
+            
         </main>
     </div>
     <footer>
@@ -372,6 +111,7 @@
     </script>
 
     <script src="tweets.js"></script>
+    <script src="script.js"></script>
 
 </body>
 

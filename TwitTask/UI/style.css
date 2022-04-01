@@ -134,6 +134,7 @@ aside {
 .container-main {
     display: flex;
     justify-content: center;
+    min-height: calc(100vh - 4.3rem - 4.3rem - 183px);
     background-color: rgba(210, 190, 250, 0.62);
 }
 
@@ -455,7 +456,7 @@ article {
 .load-button {
     width: 12.9rem;
     height: 2.3rem;
-    margin: 2.8rem 0 4.3rem 0;
+    margin: 2.8rem 0 8.3rem 0;
     font-size: 1.5rem;
     font-weight: 500;
     background-color:rgba(249, 232, 214, 0.5);
@@ -470,11 +471,13 @@ article {
 /* footer */
 
 footer {
+    position: fixed;
+    bottom:0;
     display: flex;
     justify-content: space-between;
     align-items: center;
     height: 4.3rem;
-    width: auto;
+    width: 100vw;
     background-color: rgba(32, 29, 36, 0.78);
 }
 
