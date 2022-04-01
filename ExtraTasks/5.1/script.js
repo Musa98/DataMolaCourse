@@ -7,17 +7,17 @@ function createCalendar(elem, year, month) {
       table += '<td></td>';
     }
   
-    while (currentDate.getMonth() == month - 1) {
+    while (currentDate.getMonth() === month - 1) {
       table += '<td>' + currentDate.getDate() + '</td>';
   
-      if (getDay(currentDate) % 7 == 6) { 
+      if (getDay(currentDate) % 7 === 6) { 
         table += '</tr><tr>';
       }
   
       currentDate.setDate(currentDate.getDate() + 1);
     }
 
-    if (getDay(currentDate) != 0) {
+    if (getDay(currentDate) !== 0) {
       for (let i = getDay(currentDate); i < 7; i++) {
         table += '<td></td>';
       }
@@ -30,7 +30,7 @@ function createCalendar(elem, year, month) {
   
   function getDay(date) { 
     let day = date.getDay();
-    if (day == 0) day = 7; 
+    if (day === 0) day = 7; 
     return day - 1;
   }
   
