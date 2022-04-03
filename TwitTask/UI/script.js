@@ -31,8 +31,7 @@ function removeTweet(id) {
 function getFeed(skip = 0, top = 10, obj = null) {
   const tweetFeed = new TweetFeedView('tweet-collection');
   if (obj === null) {
-    tweetCollection.getPage(skip, top, obj);
-    tweetFeed.display(tweetCollection);
+    tweetFeed.display(tweetCollection, skip, top);
   } else {
     const filter = new FilterView('tweet-collection');
     filter.display(tweetCollection, obj, skip, top);

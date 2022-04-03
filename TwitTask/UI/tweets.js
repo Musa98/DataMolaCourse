@@ -613,14 +613,14 @@ class TweetFeedView {
     }
   }
 
-  display(tweetFeed) {
+  display(tweetFeed, skip, top) {
     function parseDate(date) {
       const dateStore = {
         resultDate: '',
         resultTime: ''
       };
       dateStore.resultDate += date.getDate() > 9 ? `${date.getDate()}.` : `0${date.getDate()}.`;
-      dateStore.resultDate += (date.getMonth() + 1) > 9 ? `${date.getMonth()}.` : `0${date.getMonth()}.`;
+      dateStore.resultDate += (date.getMonth() + 1) > 9 ? `${date.getMonth() + 1}.` : `0${date.getMonth() + 1}.`;
       dateStore.resultDate += String(date.getFullYear()).slice(2);
       dateStore.resultTime += date.getHours() > 9 ? `${date.getHours()}:` : `0${date.getHours()}:`;
       dateStore.resultTime += date.getMinutes() > 9 ? `${date.getMinutes()}` : `0${date.getMinutes()}`;
@@ -628,7 +628,7 @@ class TweetFeedView {
     }
 
     let result = '';
-    const arr = tweetFeed.getPage();
+    const arr = tweetFeed.getPage(skip, top);
     arr.forEach(element => {
       const text = element.text.replace(/(#\w+)/g, '<span class="hashtag">$1</span>');
       result += `<article>
@@ -660,6 +660,23 @@ class TweetFeedView {
     });
     const button = '<button class="load-button">Load more</button>';
     this.id.innerHTML = result + button;
+    if (!document.querySelector('aside')) {
+      const template = document.getElementById('template');
+      let aside = document.createElement('aside');
+      aside = template.content.cloneNode(true);
+      const header = document.querySelector('header');
+      document.querySelector('.container-main').classList.remove('margin-main');
+      document.querySelector('.container-main').classList.remove('tweet-view');
+      header.after(aside);
+    }
+    let filterBlock = document.querySelector('.container-filter');
+    for (let input of filterBlock.querySelectorAll('input')) {
+      input.value = '';
+    }
+    if (document.querySelector('.main-button')) {
+      document.querySelector('.container-menu-user').classList.remove('twit-container-menu-user');
+      document.querySelector('.main-button').remove();
+    }
   }
 }
 
@@ -678,7 +695,7 @@ class FilterView {
         resultTime: ''
       };
       dateStore.resultDate += date.getDate() > 9 ? `${date.getDate()}.` : `0${date.getDate()}.`;
-      dateStore.resultDate += (date.getMonth() + 1) > 9 ? `${date.getMonth()}.` : `0${date.getMonth()}.`;
+      dateStore.resultDate += (date.getMonth() + 1) > 9 ? `${date.getMonth() + 1}.` : `0${date.getMonth() + 1}.`;
       dateStore.resultDate += String(date.getFullYear()).slice(2);
       dateStore.resultTime += date.getHours() > 9 ? `${date.getHours()}:` : `0${date.getHours()}:`;
       dateStore.resultTime += date.getMinutes() > 9 ? `${date.getMinutes()}` : `0${date.getMinutes()}`;
@@ -727,6 +744,19 @@ class FilterView {
     });
     const button = '<button class="load-button">Load more</button>';
     this.id.innerHTML = result + button;
+    if (!document.querySelector('aside')) {
+      const template = document.getElementById('template');
+      let aside = document.createElement('aside');
+      aside = template.content.cloneNode(true);
+      const header = document.querySelector('header');
+      document.querySelector('.container-main').classList.remove('margin-main');
+      document.querySelector('.container-main').classList.remove('tweet-view');
+      header.after(aside);
+    }
+    if (document.querySelector('.main-button')) {
+      document.querySelector('.container-menu-user').classList.remove('twit-container-menu-user');
+      document.querySelector('.main-button').remove();
+    }
   }
 }
 
@@ -746,7 +776,7 @@ class TweetView {
         resultTime: ''
       };
       dateStore.resultDate += date.getDate() > 9 ? `${date.getDate()}.` : `0${date.getDate()}.`;
-      dateStore.resultDate += (date.getMonth() + 1) > 9 ? `${date.getMonth()}.` : `0${date.getMonth()}.`;
+      dateStore.resultDate += (date.getMonth() + 1) > 9 ? `${date.getMonth() + 1}.` : `0${date.getMonth() + 1}.`;
       dateStore.resultDate += String(date.getFullYear()).slice(2);
       dateStore.resultTime += date.getHours() > 9 ? `${date.getHours()}:` : `0${date.getHours()}:`;
       dateStore.resultTime += date.getMinutes() > 9 ? `${date.getMinutes()}` : `0${date.getMinutes()}`;
@@ -820,8 +850,26 @@ class TweetView {
       <hr>
       ${resultComments}
     </article>`;
-    const button = '<button class="load-button">Load more</button>';
-    this.id.innerHTML = result + viewOfComments + button;
+    this.id.innerHTML = result + viewOfComments;
+    if (document.querySelector('aside')) {
+      document.querySelector('aside').remove();
+    }
+    document.querySelector('.container-main').classList.add('margin-main');
+    document.querySelector('.container-main').classList.add('tweet-view');
+    let filterBlock = document.querySelector('.container-filter');
+    if (filterBlock.classList.contains('show-block')) {
+      filterBlock.classList.remove('show-block');
+    }
+    for (let input of filterBlock.querySelectorAll('input')) {
+      input.value = '';
+    }
+    if (!document.querySelector('.main-button')) {
+      const mainButtonTemplate = document.getElementById('button-main-template');
+      const mainButton = mainButtonTemplate.content.cloneNode(true);
+      const titleUserName = document.querySelector('.text-user-name');
+      titleUserName.after(mainButton);
+      document.querySelector('.container-menu-user').classList.add('twit-container-menu-user');
+    }
     return null;
   }
 }

@@ -134,7 +134,7 @@ aside {
 .container-main {
     display: flex;
     justify-content: center;
-    min-height: calc(100vh - 4.3rem - 4.3rem - 183px);
+    min-height: calc(100vh - 4.3rem - 4.3rem - 12.2rem);
     background-color: rgba(210, 190, 250, 0.62);
 }
 
@@ -471,13 +471,13 @@ article {
 /* footer */
 
 footer {
-    position: fixed;
-    bottom:0;
+    /* position: fixed;
+    bottom:0; */
     display: flex;
     justify-content: space-between;
     align-items: center;
     height: 4.3rem;
-    width: 100vw;
+    width: auto;
     background-color: rgba(32, 29, 36, 0.78);
 }
 
@@ -541,6 +541,10 @@ footer {
     color: white;
 }
 
+.tweet-view{
+    min-height: calc(100vh - 4.3rem - 4.3rem);
+}
+
 /* Page of Twit */
 
 .margin-main {
@@ -577,9 +581,11 @@ footer {
 } */
 
 .twit-comment-page {
+    overflow-y: scroll;
     display: flex;
     flex-direction: column;
     gap:1rem;
+    padding-bottom: 2rem;
     justify-content: flex-start;
     height:35.1rem;
     border: 1px solid #B0AEAA;
@@ -627,6 +633,7 @@ footer {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    margin-bottom:2rem;
 }
 
 .user-comment-information > textarea {
