@@ -698,6 +698,153 @@ footer {
     cursor: pointer;
 }
 
+/* Autorization */
+
+.main-enter-block{
+    justify-content: center;
+}
+
+
+.container-main-enter{
+    display: flex;
+    justify-content: center;
+    min-height: calc(100vh - 4.3rem - 4.3rem);
+    margin-top:4.3rem;
+    background-color: rgba(210, 190, 250, 0.62);
+}
+
+.authorization{
+    width: 7.1rem;
+}
+
+.authorization-block{
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+    justify-content: space-between;
+    width:31.9rem;
+    height:20.1rem;
+    background-color: rgba(197, 194, 203, 0.55);
+    box-shadow: 4px 2px 7px rgba(0, 0, 0, 0.25);
+    border-radius: 4px;
+}
+
+.authorization-block > span{
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin-top: 2rem;
+}
+
+.container-login{
+    display: flex;
+    align-items:center;
+    justify-content: space-between;
+    width:15.2rem;
+    margin-right: 2rem;
+}
+
+.container-login > span{ 
+    font-size:1.1rem;
+    font-weight: 500;
+}
+
+.input-login{
+    width:11.75rem;
+    height: 2.1rem;
+    padding: 0 0.5rem;
+    border-radius: 10px;
+    border: 2px solid black;
+}
+
+.container-password{
+    display: flex;
+    align-items:center;
+    justify-content: space-between;
+    width:16.9rem;
+    margin-right: 3.5rem;
+}
+
+.container-password > span{ 
+    font-size:1.1rem;
+    font-weight: 500;
+}
+
+.input-password{
+    width:11.75rem;
+    height: 2.1rem;
+    padding: 0 0.5rem;
+    border-radius: 10px;
+    border: 2px solid black;
+}
+
+.enter-buttons{
+    display: flex;
+    justify-content: space-between;
+    width:18.9rem;
+    margin-bottom: 2rem;
+}
+
+.enter-buttons > button{
+    width:7rem;
+    height:1.75rem;
+    padding: .3125rem;
+    font-size: .875rem;
+    font-weight: 600;
+    background-color:#BFA8ED;
+}
+
+.enter-buttons > button:hover{
+    cursor: pointer;
+    background-color:#AF98DD;
+}
+
+.enter-buttons > input{
+    width:7rem;
+    height:1.75rem;
+    padding: .3125rem;
+    font-size: .875rem;
+    font-weight: 600;
+    border:none;
+    border-radius: 4px;
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.25);
+    background-color:#F9E8D6;
+}
+
+.enter-buttons > input:hover{
+    cursor: pointer;
+    background-color:#EEDECC;
+}
+
+/* Registration */
+
+.registration{
+    width:13.1rem;
+}
+
+.registration-block{
+    width:32rem;
+    height: 24.375rem;
+}
+
+.repeat-password{
+    width:20.375rem;
+    margin-right:6.7rem;
+}
+
+.one-button{
+    justify-content: center;
+}
+
+.enter-buttons > .registration-button{
+    background-color:#BFA8ED;
+    margin-left: 1rem;
+}
+
+.enter-buttons > .registration-button:hover{
+    cursor: pointer;
+    background-color:#AF98DD;;
+}
+
 /* Media */
 @media only screen and (max-width : 414px){
     html,body {
