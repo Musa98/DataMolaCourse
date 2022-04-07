@@ -56,3 +56,5 @@ function showTweet(id) {
 //   text: 'the'
 // });
 // showTweet('2');
+
+// Постараюсь доделать к заврашней проверке
