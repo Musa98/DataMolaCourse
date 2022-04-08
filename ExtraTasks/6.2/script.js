@@ -153,9 +153,20 @@ const addCross = (event) =>{
 
 }
 
-const loadGame = (event) =>{
+const updateBoard = (event) => {
+    arrField.forEach(element => element.field = 'empty');
+    for (let i = 1; i <= 9; i++){
+        document.getElementById('' + i).innerHTML = '';
+    }
     const gameBoard = document.querySelector('.container-game');
     gameBoard.addEventListener('click', addCross);
+}
+
+const loadGame = (event) =>{
+    const gameBoard = document.querySelector('.container-game');
+    const restartButton = document.querySelector('.restart-button');
+    gameBoard.addEventListener('click', addCross);
+    restartButton.addEventListener('click', updateBoard)
 }
 
 window.addEventListener('load', loadGame);
