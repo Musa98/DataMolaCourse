@@ -30,3 +30,13 @@ main{
     background-color: rgba(230, 233, 229, 0.425);
     border-radius: 2px;
 }
+
+.restart-button{
+    font-size: 1.5rem;
+    width:10rem;
+    height: 3rem;
+    border:1px solid black;
+    border-radius: 4px;
+    background-color:#638aaa;
+    margin-right:1rem;
+}
