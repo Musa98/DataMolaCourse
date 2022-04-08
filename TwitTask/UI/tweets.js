@@ -1,4 +1,5 @@
 /* eslint-disable linebreak-style */
+/* eslint-disable no-continue */
 /* eslint-disable strict */
 /* eslint-disable no-unused-vars */
 /* eslint-disable default-param-last */
@@ -631,7 +632,7 @@ class TweetFeedView {
     const arr = tweetFeed.getPage(skip, top);
     arr.forEach(element => {
       const text = element.text.replace(/(#\w+)/g, '<span class="hashtag">$1</span>');
-      result += `<article>
+      result += `<article id="${element.id}">
                       <button class="delete-button">
                           <img class="delete-img" src="img/delete.svg" alt="delete">
                       </button>
@@ -671,6 +672,7 @@ class TweetFeedView {
     }
     let filterBlock = document.querySelector('.container-filter');
     for (let input of filterBlock.querySelectorAll('input')) {
+      if (input.classList.contains('save-button')) continue;
       input.value = '';
     }
     if (document.querySelector('.main-button')) {
@@ -715,7 +717,7 @@ class FilterView {
     tag.value = filter.hashtags || '';
     filterTweets.forEach(element => {
       const text = element.text.replace(/(#\w+)/g, '<span class="hashtag">$1</span>');
-      result += `<article>
+      result += `<article id="${element.id}">
                       <button class="delete-button">
                           <img class="delete-img" src="img/delete.svg" alt="delete">
                       </button>
@@ -785,7 +787,7 @@ class TweetView {
     const text = tweet.text.replace(/(#\w+)/g, '<span class="hashtag">$1</span>');
     let viewOfComments;
     let resultComments = '';
-    let result = `<article>
+    let result = `<article id="${tweet.id}">
                       <button class="delete-button">
                           <img class="delete-img" src="img/delete.svg" alt="delete">
                       </button>
