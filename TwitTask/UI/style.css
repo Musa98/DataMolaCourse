@@ -65,6 +65,18 @@ button {
     cursor: pointer;
 }
 
+.login-button{
+    width: 5rem;
+    height: 2.4rem;
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.login-button:hover {
+    background-color: #EEDECC;
+    cursor: pointer;
+}
+
 /* Блок добавления твита и кнопка фильтра */
 
 aside {
@@ -75,6 +87,15 @@ aside {
     height: 12.2rem;
     margin-top: 4.3rem;
     background-color: #F4F4F4;
+}
+
+.without-login{
+    height:6rem;
+}
+
+.header-login-button{
+    margin-right:2rem;
+    width:auto;
 }
 
 .filter-button {
@@ -261,13 +282,17 @@ aside {
 .tags-list {
     display: flex;
     justify-content: flex-start;
+    flex-wrap:wrap;
     gap: 1rem;
-    width: 20.3rem;
+    width: 22.3rem;
+    height:5rem;
     margin-bottom: 0.5rem;
+    overflow-y: auto;
 }
 
 .tags-list>div {
-    width: 4.3rem;
+    position: relative;
+    width: auto;
     height: 1.5rem;
     padding: 0.2rem 1rem 1rem 1rem;
     text-align: center;
@@ -279,9 +304,8 @@ aside {
 }
 
 .delete-small-button {
-    position: relative;
-    bottom: 1.6rem;
-    left: 1.8rem;
+    position: absolute;
+    bottom: 0.5rem;
     background-color: transparent;
     box-shadow: 0 0 0;
     opacity: 0;
@@ -311,25 +335,34 @@ main {
 article {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-end;
+    flex-direction: column;
     width: 44.6rem;
-    height: 12.5rem;
+    height: 15.5rem;
     margin: 2.7rem 0 1.5rem 0;
-    padding-right: 2.2rem;
+    padding-bottom: 3.5rem;
     background: linear-gradient(0deg, rgb(216, 216, 216), rgb(242, 242, 242), rgb(212, 212, 212));
     box-shadow: 4px 2px 7px rgba(0, 0, 0, 0.25);
 }
 
+.tweet-element:hover * {
+    cursor:default;
+}
+
+.tweet-element:hover{
+    cursor: pointer;
+}
+
 .delete-button {
     position: relative;
-    left: 39.1rem;
-    bottom: 4.9rem;
+    left: 21.1rem;
+    bottom: -2.5rem;
     background-color: transparent;
     box-shadow: 0 0 0;
     opacity: 0;
 }
 
-.delete-button:hover {
+.delete-button:hover{
     opacity: 100%;
     cursor: pointer;
 }
@@ -337,6 +370,11 @@ article {
 .delete-img {
     width: 2.2rem;
     height: 2.2rem;
+}
+
+.delete-img:hover {
+    opacity: 100%;
+    cursor: pointer;
 }
 
 .avatar {
@@ -366,13 +404,14 @@ article {
 .twit-information {
     display: flex;
     flex-direction: column;
+    align-items:center;
     width: 27.2rem;
     height: 9.5rem;
 }
 
 .twit-text {
-    width: 27.2rem;
-    height: 7rem;
+    width: 39.2rem;
+    height: 9rem;
     padding: 0.4rem 0.7rem;
     resize: none;
     font-size: 1rem;
@@ -391,7 +430,7 @@ article {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 27.2rem;
+    width: 39.2rem;
     height: 1.9rem;
 }
 
@@ -448,6 +487,15 @@ article {
     margin-top: 0.1rem;
 }
 
+.tweets-edit-empty{
+    width:auto;
+}
+
+.tweets-remove-empty{
+    padding-left: 1rem;
+    padding-right: 0;
+}
+
 .comment-img {
     width: 1.4rem;
     height: 1.4rem;
@@ -469,10 +517,15 @@ article {
     color: rgba(0, 0, 0, 0.5);
 }
 
-/* .load-button:hover {
+.active-load-button{
+    color:black;
+    background-color:rgba(249, 232, 214);
+}
+
+.active-load-button:hover {
     background-color: #EEDECC;
     cursor: pointer;
-} */
+}
 
 /* footer */
 
@@ -564,7 +617,7 @@ footer {
     width: 5rem;
     height: 2.4rem;
     padding-left: 0.1rem;
-    margin-left:2rem;
+    /* margin-left:2rem; */
     font-size: 1.1rem;
     font-weight: 500;
 }
@@ -612,7 +665,7 @@ footer {
 .user-comment {
     position: relative;
     width:32.5rem;
-    height: 5.6rem;
+    height: 15.6rem;
     box-shadow: 4px 2px 7px rgba(0, 0, 0, 0.25);
     background-color: rgba(238, 228, 209, 0.55);
     border: 1px solid rgba(19, 19, 19, 0.42);
@@ -644,7 +697,7 @@ footer {
 
 .user-comment-information > textarea {
     width:23.7rem;
-    height: 2.1rem;
+    height: 12.1rem;
     font-family: 'Rajdhani';
     font-size: 0.9rem;
 }
@@ -673,6 +726,10 @@ footer {
 .time-information-comment {
     font-size: 0.75rem;
     font-weight: 600;
+}
+
+.user-comment-information > .add-comment-input{
+    height:2.1rem;
 }
 
 .add-user-comment {
