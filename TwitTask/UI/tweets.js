@@ -1,4 +1,5 @@
 /* eslint-disable linebreak-style */
+/* eslint-disable no-param-reassign */
 /* eslint-disable no-continue */
 /* eslint-disable strict */
 /* eslint-disable no-unused-vars */
@@ -228,6 +229,8 @@ const tweets = [{
 }
 ];
 
+const listUser = [{ ['Musa']: '123' }];
+
 class Tweet {
   constructor({
     id,
@@ -236,35 +239,11 @@ class Tweet {
     author,
     comments
   }) {
-    this._id = id;
+    this.id = id;
     this.text = text;
-    this._createdAt = createdAt;
-    this._author = author;
+    this.createdAt = createdAt;
+    this.author = author;
     this.comments = comments;
-  }
-
-  get id() {
-    return this._id;
-  }
-
-  set id(value) {
-    throw new Error('You can\'t change this property');
-  }
-
-  get createdAt() {
-    return this._createdAt;
-  }
-
-  set createdAt(value) {
-    throw new Error('You can\'t change this property');
-  }
-
-  get author() {
-    return this._author;
-  }
-
-  set author(value) {
-    throw new Error('You can\'t change this property');
   }
 
   static validateTweet(tweet) {
@@ -276,17 +255,17 @@ class Tweet {
 
     for (let key in tweet) {
       switch (key) {
-        case '_id':
+        case 'id':
           if (typeof tweet[key] !== 'string') return false;
           break;
         case 'text':
           if (tweet[key].length > 280) return false;
           if (typeof tweet[key] !== 'string') return false;
           break;
-        case '_createdAt':
+        case 'createdAt':
           if (!(tweet[key] instanceof Date && !Number.isNaN(tweet[key].valueOf()))) return false;
           break;
-        case '_author':
+        case 'author':
           if (typeof tweet[key] !== 'string') return false;
           break;
         case 'comments':
@@ -307,34 +286,10 @@ class Comment {
     createdAt,
     author
   }) {
-    this._id = id;
+    this.id = id;
     this.text = text;
-    this._createdAt = createdAt;
-    this._author = author;
-  }
-
-  get id() {
-    return this._id;
-  }
-
-  set id(value) {
-    throw new Error('You can\'t change this property');
-  }
-
-  get createdAt() {
-    return this._createdAt;
-  }
-
-  set createdAt(value) {
-    throw new Error('You can\'t change this property');
-  }
-
-  get author() {
-    return this._author;
-  }
-
-  set author(value) {
-    throw new Error('You can\'t change this property');
+    this.createdAt = createdAt;
+    this.author = author;
   }
 
   static validateComment(com) {
@@ -346,17 +301,17 @@ class Comment {
 
     for (let key in com) {
       switch (key) {
-        case '_id':
+        case 'id':
           if (typeof com[key] !== 'string') return false;
           break;
         case 'text':
           if (com[key].length > 280) return false;
           if (typeof com[key] !== 'string') return false;
           break;
-        case '_createdAt':
+        case 'createdAt':
           if (!(com[key] instanceof Date && !Number.isNaN(com[key].valueOf()))) return false;
           break;
-        case '_author':
+        case 'author':
           if (typeof com[key] !== 'string') return false;
           break;
         default:
@@ -368,17 +323,26 @@ class Comment {
 }
 
 class TweetCollection {
-  _user = 'Musa';
+  _user = null;
 
   constructor(arr) {
     if (!(arr instanceof Array)) {
       throw new Error('Argument is not array!');
     }
-    this._tweetsArr = arr.map(element => new Tweet(element));
-    this._tweetsArr.forEach(element => {
-      let tweet = element;
-      tweet.comments = element.comments.map(elementComment => new Comment(elementComment));
-    });
+    if (localStorage.getItem('tweetArr')) {
+      const test = this.restore();
+      this._tweetsArr = test.map(element => new Tweet(element));
+      this._tweetsArr.forEach(element => {
+        let tweet = element;
+        tweet.comments = element.comments.map(elementComment => new Comment(elementComment));
+      });
+    } else {
+      this._tweetsArr = arr.map(element => new Tweet(element));
+      this._tweetsArr.forEach(element => {
+        let tweet = element;
+        tweet.comments = element.comments.map(elementComment => new Comment(elementComment));
+      });
+    }
   }
 
   get user() {
@@ -479,7 +443,7 @@ class TweetCollection {
       array = this._filterTwits(array, obj);
     }
 
-    return array.sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt))//!
+    return array.sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt))
       .splice(skip, top);
   }
 
@@ -502,6 +466,7 @@ class TweetCollection {
 
     if (Tweet.validateTweet(tweet)) {
       this._tweetsArr.push(tweet);
+      this.save();
       return true;
     }
     return false;
@@ -522,6 +487,7 @@ class TweetCollection {
 
     if (Tweet.validateTweet(modifyTweet)) {
       modifyTweet.text = text;
+      this.save();
       return true;
     }
     return false;
@@ -541,6 +507,7 @@ class TweetCollection {
     this._tweetsArr.forEach((element, index, array) => {
       if (element.id === id) {
         array.splice(index, 1);
+        this.save();
         isDeleted = true;
       }
     });
@@ -579,12 +546,32 @@ class TweetCollection {
       this._tweetsArr.forEach((element) => {
         if (element.id === id) {
           element.comments.push(comment);
+          this.save();
           isAddComment = true;
         }
       });
     }
 
     return isAddComment || false;
+  }
+
+  save() {
+    localStorage.setItem('tweetArr', JSON.stringify(this.tweetsArr));
+  }
+
+  restore() {
+    const newTweet = JSON.parse(localStorage.getItem('tweetArr'));
+    newTweet.forEach(element => {
+      element.createdAt = new Date(element.createdAt);
+      element.comments.forEach(elementComment => {
+        elementComment.createdAt = new Date(elementComment.createdAt);
+      });
+    });
+    return newTweet;
+  }
+
+  restoreUser() {
+    return JSON.parse(localStorage.getItem('currentUser'));
   }
 }
 
@@ -628,18 +615,26 @@ class TweetFeedView {
       return dateStore;
     }
 
+    const container = this.id;
+    container.style.minHeight = 'calc(100vh - 4.3rem - 4.3rem - 12.1rem)';
+    container.style.marginTop = '0rem';
     let result = '';
     const arr = tweetFeed.getPage(skip, top);
     arr.forEach(element => {
       const text = element.text.replace(/(#\w+)/g, '<span class="hashtag">$1</span>');
-      result += `<article id="${element.id}">
-                      <button class="delete-button">
-                          <img class="delete-img" src="img/delete.svg" alt="delete">
-                      </button>
-                      <div class="avatar">
-                          <img class="img-avatar" src="img/avatar.png" alt="avatar" />
+      const editUser = tweetFeed.user === element.author ? '<button class="edit-button">Edit</button>' : '';
+      const removeUser = tweetFeed.user === element.author ? `
+                                                            <button class="delete-button">
+                                                              <img class="delete-img" src="img/delete.svg" alt="delete">
+                                                            </button>`
+        : '';
+      const tweetsEditEmpty = tweetFeed.user === element.author ? '' : 'tweets-edit-empty';
+      const tweetsRemoveEmpty = tweetFeed.user === element.author ? '' : 'tweets-remove-empty';
+      result += `<article id="${element.id}" class="tweet-element ${tweetsRemoveEmpty}">
+                      ${removeUser}
+                      
                           <span class="name-avatar">${element.author}</span>
-                      </div>
+                      
                       <div class="twit-information">
                           <p class="twit-text" contenteditable="false" >${text}</p>
                           <div class="twit-dates">
@@ -648,8 +643,8 @@ class TweetFeedView {
                                   <span class="date-information">${parseDate(element.createdAt).resultDate}</span>
                                   <span class="time-information">${parseDate(element.createdAt).resultTime}</span>
                               </div>
-                              <div class="edit-and-comment">
-                                  <button class="edit-button">Edit</button>
+                              <div class="edit-and-comment ${tweetsEditEmpty}">
+                                  ${editUser}
                                   <div class="twit-comments">
                                       <img class="comment-img" src="img/comment.svg" alt="comment">
                                       <span class="comment-count">${element.comments.length}</span>
@@ -661,7 +656,7 @@ class TweetFeedView {
     });
     const button = '<button class="load-button">Load more</button>';
     this.id.innerHTML = result + button;
-    if (!document.querySelector('aside')) {
+    if (!document.querySelector('aside') && tweetFeed.user !== null) {
       const template = document.getElementById('template');
       let aside = document.createElement('aside');
       aside = template.content.cloneNode(true);
@@ -669,6 +664,18 @@ class TweetFeedView {
       document.querySelector('.container-main').classList.remove('margin-main');
       document.querySelector('.container-main').classList.remove('tweet-view');
       header.after(aside);
+    } else if (!document.querySelector('aside') && tweetFeed.user === null) {
+      const template = document.getElementById('template');
+      let aside = document.createElement('aside');
+      aside = template.content.cloneNode(true);
+      const header = document.querySelector('header');
+      document.querySelector('.container-main').classList.remove('margin-main');
+      document.querySelector('.container-main').classList.remove('tweet-view');
+      header.after(aside);
+      document.querySelector('.container-add-twit').remove();
+      document.querySelector('aside').classList.add('without-login');
+      document.querySelector('.container-menu-user').innerHTML = '<button class="login-button">Login</button>';
+      document.querySelector('.container-menu-user').classList.add('header-login-button');
     }
     let filterBlock = document.querySelector('.container-filter');
     for (let input of filterBlock.querySelectorAll('input')) {
@@ -678,6 +685,23 @@ class TweetFeedView {
     if (document.querySelector('.main-button')) {
       document.querySelector('.container-menu-user').classList.remove('twit-container-menu-user');
       document.querySelector('.main-button').remove();
+    }
+    if (tweetFeed.user === null) {
+      if (document.querySelector('.container-add-twit')) {
+        document.querySelector('.container-add-twit').remove();
+      }
+      document.querySelector('aside').classList.add('without-login');
+      document.querySelector('.container-menu-user').innerHTML = '<button class="login-button">Login</button>';
+      document.querySelector('.container-menu-user').classList.add('header-login-button');
+    } else {
+      document.querySelector('aside').classList.remove('without-login');
+      document.querySelector('.container-menu-user').innerHTML = `
+        <div class="container-menu-user">
+          <span id="user" class="text-user-name">${tweetFeed.user}</span>
+          <button class="exit-button">Exit</button>
+        </div>
+      `;
+      document.querySelector('.container-menu-user').classList.remove('header-login-button');
     }
   }
 }
@@ -703,6 +727,8 @@ class FilterView {
       dateStore.resultTime += date.getMinutes() > 9 ? `${date.getMinutes()}` : `0${date.getMinutes()}`;
       return dateStore;
     }
+    const container = this.id;
+    container.style.minHeight = 'calc(100vh - 4.3rem - 4.3rem - 6rem)';
     let result = '';
     const filterTweets = tweetFeed.getPage(skip, top, filter);
     const username = document.querySelector('.choose-user-name');
@@ -717,14 +743,17 @@ class FilterView {
     tag.value = filter.hashtags || '';
     filterTweets.forEach(element => {
       const text = element.text.replace(/(#\w+)/g, '<span class="hashtag">$1</span>');
-      result += `<article id="${element.id}">
-                      <button class="delete-button">
-                          <img class="delete-img" src="img/delete.svg" alt="delete">
-                      </button>
-                      <div class="avatar">
-                          <img class="img-avatar" src="img/avatar.png" alt="avatar" />
+      const editUser = tweetFeed.user === element.author ? '<button class="edit-button">Edit</button>' : '';
+      const removeUser = tweetFeed.user === element.author ? `
+                                                            <button class="delete-button">
+                                                              <img class="delete-img" src="img/delete.svg" alt="delete">
+                                                            </button>`
+        : '';
+      const tweetsEditEmpty = tweetFeed.user === element.author ? '' : 'tweets-edit-empty';
+      const tweetsRemoveEmpty = tweetFeed.user === element.author ? '' : 'tweets-remove-empty';
+      result += `<article id="${element.id}" class="tweet-element ${tweetsRemoveEmpty}">
+                      ${removeUser}
                           <span class="name-avatar">${element.author}</span>
-                      </div>
                       <div class="twit-information">
                           <p class="twit-text" contenteditable="false" >${text}</p>
                           <div class="twit-dates">
@@ -733,8 +762,8 @@ class FilterView {
                                   <span class="date-information">${parseDate(element.createdAt).resultDate}</span>
                                   <span class="time-information">${parseDate(element.createdAt).resultTime}</span>
                               </div>
-                              <div class="edit-and-comment">
-                                  <button class="edit-button">Edit</button>
+                              <div class="edit-and-comment ${tweetsEditEmpty}">
+                                  ${editUser}
                                   <div class="twit-comments">
                                       <img class="comment-img" src="img/comment.svg" alt="comment">
                                       <span class="comment-count">${element.comments.length}</span>
@@ -787,14 +816,17 @@ class TweetView {
     const text = tweet.text.replace(/(#\w+)/g, '<span class="hashtag">$1</span>');
     let viewOfComments;
     let resultComments = '';
-    let result = `<article id="${tweet.id}">
-                      <button class="delete-button">
-                          <img class="delete-img" src="img/delete.svg" alt="delete">
-                      </button>
-                      <div class="avatar">
-                          <img class="img-avatar" src="img/avatar.png" alt="avatar" />
+    const editUser = tweetFeed.user === tweet.author ? '<button class="edit-button">Edit</button>' : '';
+    const removeUser = tweetFeed.user === tweet.author ? `
+                                                          <button class="delete-button">
+                                                            <img class="delete-img" src="img/delete.svg" alt="delete">
+                                                          </button>`
+      : '';
+    const tweetsEditEmpty = tweetFeed.user === tweet.author ? '' : 'tweets-edit-empty';
+    const tweetsRemoveEmpty = tweetFeed.user === tweet.author ? '' : 'tweets-remove-empty';
+    let result = `<article id="${tweet.id}" class="tweet-element ${tweetsRemoveEmpty}">
+                      ${removeUser}
                           <span class="name-avatar">${tweet.author}</span>
-                      </div>
                       <div class="twit-information">
                           <p class="twit-text" contenteditable="false" >${text}</p>
                           <div class="twit-dates">
@@ -803,8 +835,8 @@ class TweetView {
                                   <span class="date-information">${parseDate(tweet.createdAt).resultDate}</span>
                                   <span class="time-information">${parseDate(tweet.createdAt).resultTime}</span>
                               </div>
-                              <div class="edit-and-comment">
-                                  <button class="edit-button">Edit</button>
+                              <div class="edit-and-comment ${tweetsEditEmpty}">
+                                  ${editUser}
                                   <div class="twit-comments">
                                       <img class="comment-img" src="img/comment.svg" alt="comment">
                                       <span class="comment-count">${tweet.comments.length}</span>
@@ -813,15 +845,10 @@ class TweetView {
                           </div>
                       </div>
                   </article>`;
-    if (!tweet.comments.length) {
-      const button = '<button class="load-button">Load more</button>';
-      this.id.innerHTML = result + button;
-      return null;
-    }
+
     tweet.comments.forEach(element => {
       resultComments += `
         <div class="user-comment">
-            <img class="avatar-comment" src="img/avatar.png" alt="avatar-comment">
             <div class="user-comment-information">
                 <div class="twit-dates comment-dates">
                     <span>${element.author}</span>
@@ -831,13 +858,12 @@ class TweetView {
                         <span class="time-information time-information-comment">${parseDate(element.createdAt).resultTime}</span>
                     </div>
                 </div>
-                <textarea class="twit-text" maxlength="280" readonly>It is my first comment</textarea>
+                <textarea class="twit-text" maxlength="280" readonly>${element.text}</textarea>
             </div>
         </div>`;
     });
-    resultComments += `
+    resultComments += tweetFeed.user !== null ? `
     <div class="add-user-comment">
-      <img class="avatar-comment" src="img/avatar.png" alt="avatar-comment">
       <div class="user-comment-information">
           <div class="twit-dates comment-dates">
               <span>${tweetFeed.user}</span>
@@ -845,7 +871,8 @@ class TweetView {
           <textarea class="twit-text add-comment-input" maxlength="280" placeholder="Add comment..."></textarea>
           <button class="button-add-comment">Add comment</button>
       </div>
-    </div>`;
+    </div>`
+      : '';
     viewOfComments = `
     <article class="twit-comment-page">
       <span>Comments</span>
@@ -868,10 +895,182 @@ class TweetView {
     if (!document.querySelector('.main-button')) {
       const mainButtonTemplate = document.getElementById('button-main-template');
       const mainButton = mainButtonTemplate.content.cloneNode(true);
-      const titleUserName = document.querySelector('.text-user-name');
-      titleUserName.after(mainButton);
-      document.querySelector('.container-menu-user').classList.add('twit-container-menu-user');
+      if (tweetFeed.user) {
+        const titleUserName = document.querySelector('.text-user-name');
+        titleUserName.after(mainButton);
+        document.querySelector('.container-menu-user').classList.add('twit-container-menu-user');
+        document.querySelector('.container-menu-user').querySelector('.container-menu-user').style.width = '17rem';
+      } else {
+        const containerMenu = document.querySelector('.container-menu-user');
+        containerMenu.prepend(mainButton);
+        document.querySelector('.main-button').style.marginRight = '1rem';
+      }
+    }
+    document.querySelector('.save-button').value = 'Save';
+    return null;
+  }
+}
+
+class LoginPageView {
+  constructor(id) {
+    this.id = document.getElementById(id);
+    if (!document.body) {
+      throw new Error('Incorrect id!');
+    }
+  }
+
+  display() {
+    const container = this.id;
+    container.innerHTML = `
+        <form name="authorization">
+            <div class="authorization-block">
+                <span>Authorization</span>
+                <div class="container-login">
+                    <span>Login</span>
+                    <input class="input-login">
+                </div>
+                <div class="container-password">
+                    <span>Password</span>
+                    <input class="input-password">
+                </div>
+                <div class="enter-buttons">
+                    <button id="register-button">Registration</button>
+                    <input type="submit" value="Authorization">
+                </div>
+            </div>
+        </form>
+    `;
+    container.classList.add('main-enter-block');
+    container.style.minHeight = 'calc(100vh - 4.3rem - 4.3rem)';
+    if (document.querySelector('aside')) {
+      document.querySelector('aside').remove(); //!
+    }
+    document.querySelector('.container-menu-user').innerHTML = `
+      <button class="main-button" style="margin-right:1.5rem">
+        <span class="iconify" data-icon="mdi:home-import-outline"></span>
+        <span>Main</span>
+      </button>
+      <button class="login-button">Login</button>
+    `;
+  }
+}
+
+class RegisterPageView {
+  constructor(id) {
+    this.id = document.getElementById(id);
+    if (!document.body) {
+      throw new Error('Incorrect id!');
+    }
+  }
+
+  display() {
+    const container = this.id;
+    container.innerHTML = `
+      <form name="register">
+      <div class="authorization-block registration-block">
+          <span>Registration</span>
+          <div class="container-login">
+              <span>Login</span>
+              <input class="input-login">
+          </div>
+          <div class="container-password">
+              <span>Password</span>
+              <input class="input-password">
+          </div>
+          <div class="container-password repeat-password">
+              <span>Repeat Password</span>
+              <input class="input-password">
+          </div>
+          <div class="enter-buttons one-button">
+              <input type="submit" value="Registration" class="registration-button">
+          </div>
+      </div>
+      </form>
+    `;
+    container.classList.add('main-enter-block');
+    container.style.minHeight = 'calc(100vh - 4.3rem - 4.3rem)';
+    document.querySelector('.container-menu-user').innerHTML = `
+    <button class="main-button">      
+      <span class="iconify" data-icon="mdi:home-import-outline"></span>
+      <span>Main</span>
+    </button>
+    <button class="login-button">Login</button>
+    `;
+    document.querySelector('.main-button').style.marginRight = '1.5rem';
+  }
+}
+
+class UserList {
+  arrayUser = [{ ['Musa']: '123' }];
+
+  constructor(list) {
+    if (localStorage.getItem('userArr')) {
+      this.arrayUser = this.restore();
+    } else {
+      this.arrayUser = list;
+    }
+  }
+
+  registerUser(username, password, repeatPassword) {
+    let repeatUser = false;
+    if (password !== repeatPassword) {
+      alert('Password and repeatpassword don\'t same');
+      return null;
+    }
+    if (/^[^a-zA-Z]/.test(username)) {
+      alert('Incorrect username');
+      return null;
+    }
+    if (username === '' || password === '' || repeatPassword === '') {
+      alert('Empty field');
+      return null;
+    }
+    this.arrayUser.forEach(element => {
+      for (let key in element) {
+        if (key === username && element[key] === password) {
+          alert('This user is alredy register');
+          repeatUser = true;
+        }
+      }
+    });
+    if (repeatUser) return null;
+    const userInfo = {};
+    userInfo[username] = password;
+    this.arrayUser.push(userInfo);
+    this.save();
+    return username;
+  }
+
+  authorizeUser(username, password) {
+    let isAuthorize = false;
+    if (username === '' || password === '') {
+      alert('Empty field');
+      return null;
+    }
+    this.arrayUser.forEach(element => {
+      for (let key in element) {
+        if (key === username && element[key] === password) {
+          isAuthorize = true;
+          return;
+        }
+      }
+    });
+    if (isAuthorize) {
+      this.saveUser(username);
+      return username;
     }
     return null;
+  }
+
+  save() {
+    localStorage.setItem('userArr', JSON.stringify(this.arrayUser));
+  }
+
+  restore() {
+    return JSON.parse(localStorage.getItem('userArr'));
+  }
+
+  saveUser(userName) {
+    localStorage.setItem('currentUser', JSON.stringify(userName));
   }
 }
