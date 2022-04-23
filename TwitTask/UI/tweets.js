@@ -329,20 +329,20 @@ class TweetCollection {
     if (!(arr instanceof Array)) {
       throw new Error('Argument is not array!');
     }
-    if (localStorage.getItem('tweetArr')) {
-      const test = this.restore();
-      this._tweetsArr = test.map(element => new Tweet(element));
-      this._tweetsArr.forEach(element => {
-        let tweet = element;
-        tweet.comments = element.comments.map(elementComment => new Comment(elementComment));
-      });
-    } else {
+    // if (localStorage.getItem('tweetArr')) {
+    //   const test = this.restore();
+    //   this._tweetsArr = test.map(element => new Tweet(element));
+    //   this._tweetsArr.forEach(element => {
+    //     let tweet = element;
+    //     tweet.comments = element.comments.map(elementComment => new Comment(elementComment));
+    //   });
+    // } else {
       this._tweetsArr = arr.map(element => new Tweet(element));
       this._tweetsArr.forEach(element => {
         let tweet = element;
         tweet.comments = element.comments.map(elementComment => new Comment(elementComment));
       });
-    }
+    // }
   }
 
   get user() {
@@ -358,7 +358,8 @@ class TweetCollection {
   }
 
   set tweetsArr(value) {
-    throw new Error('You can\'t change this property');
+    // throw new Error('You can\'t change this property');
+    this._tweetsArr = value;
   }
 
   get filterTwits() {
@@ -607,6 +608,7 @@ class TweetFeedView {
         resultDate: '',
         resultTime: ''
       };
+      date = new Date(date);//!
       dateStore.resultDate += date.getDate() > 9 ? `${date.getDate()}.` : `0${date.getDate()}.`;
       dateStore.resultDate += (date.getMonth() + 1) > 9 ? `${date.getMonth() + 1}.` : `0${date.getMonth() + 1}.`;
       dateStore.resultDate += String(date.getFullYear()).slice(2);
@@ -720,6 +722,7 @@ class FilterView {
         resultDate: '',
         resultTime: ''
       };
+      date = new Date(date);//!
       dateStore.resultDate += date.getDate() > 9 ? `${date.getDate()}.` : `0${date.getDate()}.`;
       dateStore.resultDate += (date.getMonth() + 1) > 9 ? `${date.getMonth() + 1}.` : `0${date.getMonth() + 1}.`;
       dateStore.resultDate += String(date.getFullYear()).slice(2);
@@ -730,7 +733,8 @@ class FilterView {
     const container = this.id;
     container.style.minHeight = 'calc(100vh - 4.3rem - 4.3rem - 6rem)';
     let result = '';
-    const filterTweets = tweetFeed.getPage(skip, top, filter);
+    // const filterTweets = tweetFeed.getPage(skip, top, filter);
+    const filterTweets = tweetFeed.tweetsArr;
     const username = document.querySelector('.choose-user-name');
     const dateFrom = document.getElementById('date-from');
     const dateTo = document.getElementById('date-to');
@@ -806,6 +810,7 @@ class TweetView {
         resultDate: '',
         resultTime: ''
       };
+      date = new Date(date);//!
       dateStore.resultDate += date.getDate() > 9 ? `${date.getDate()}.` : `0${date.getDate()}.`;
       dateStore.resultDate += (date.getMonth() + 1) > 9 ? `${date.getMonth() + 1}.` : `0${date.getMonth() + 1}.`;
       dateStore.resultDate += String(date.getFullYear()).slice(2);
@@ -935,7 +940,7 @@ class LoginPageView {
                 </div>
                 <div class="enter-buttons">
                     <button id="register-button">Registration</button>
-                    <input type="submit" value="Authorization">
+                    <input class="authorize" type="submit" value="Authorization">
                 </div>
             </div>
         </form>
@@ -952,6 +957,7 @@ class LoginPageView {
       </button>
       <button class="login-button">Login</button>
     `;
+    document.querySelector('.container-filter').classList.remove('show-block');
   }
 }
 
@@ -1072,5 +1078,28 @@ class UserList {
 
   saveUser(userName) {
     localStorage.setItem('currentUser', JSON.stringify(userName));
+  }
+}
+
+class Error {
+  constructor(id) {
+    this.id = document.getElementById(id);
+    if (!document.body) {
+      throw new Error('Incorrect id!');
+    }
+  }
+
+  display(status, message) {
+    const container = this.id;
+    container.innerHTML = `
+    <div class="container-main-enter">
+    <main id="tweet-collection" class="main-enter-block">
+        <div class="error">
+            <span class="error-title">Error ${status}</span>
+            <p class="error-text">${message}</p>
+        </div>
+    </main>
+    </div>
+    `;
   }
 }
