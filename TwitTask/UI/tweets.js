@@ -1,4 +1,5 @@
 /* eslint-disable linebreak-style */
+/* eslint-disable no-use-before-define */
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-continue */
 /* eslint-disable strict */
@@ -329,19 +330,11 @@ class TweetCollection {
     if (!(arr instanceof Array)) {
       throw new Error('Argument is not array!');
     }
-    // if (localStorage.getItem('tweetArr')) {
-    //   const test = this.restore();
-    //   this._tweetsArr = test.map(element => new Tweet(element));
-    //   this._tweetsArr.forEach(element => {
-    //     let tweet = element;
-    //     tweet.comments = element.comments.map(elementComment => new Comment(elementComment));
-    //   });
-    // } else {
-      this._tweetsArr = arr.map(element => new Tweet(element));
-      this._tweetsArr.forEach(element => {
-        let tweet = element;
-        tweet.comments = element.comments.map(elementComment => new Comment(elementComment));
-      });
+    this._tweetsArr = arr.map(element => new Tweet(element));
+    this._tweetsArr.forEach(element => {
+      let tweet = element;
+      tweet.comments = element.comments.map(elementComment => new Comment(elementComment));
+    });
     // }
   }
 
@@ -358,7 +351,6 @@ class TweetCollection {
   }
 
   set tweetsArr(value) {
-    // throw new Error('You can\'t change this property');
     this._tweetsArr = value;
   }
 
@@ -733,7 +725,6 @@ class FilterView {
     const container = this.id;
     container.style.minHeight = 'calc(100vh - 4.3rem - 4.3rem - 6rem)';
     let result = '';
-    // const filterTweets = tweetFeed.getPage(skip, top, filter);
     const filterTweets = tweetFeed.tweetsArr;
     const username = document.querySelector('.choose-user-name');
     const dateFrom = document.getElementById('date-from');
@@ -948,7 +939,7 @@ class LoginPageView {
     container.classList.add('main-enter-block');
     container.style.minHeight = 'calc(100vh - 4.3rem - 4.3rem)';
     if (document.querySelector('aside')) {
-      document.querySelector('aside').remove(); //!
+      document.querySelector('aside').remove();
     }
     document.querySelector('.container-menu-user').innerHTML = `
       <button class="main-button" style="margin-right:1.5rem">

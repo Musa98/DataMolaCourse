@@ -1,4 +1,9 @@
 /* eslint-disable linebreak-style */
+/* eslint-disable max-len */
+/* eslint-disable no-param-reassign */
+/* eslint-disable consistent-return */
+/* eslint-disable no-use-before-define */
+/* eslint-disable class-methods-use-this */
 /* eslint-disable max-classes-per-file */
 /* eslint-disable no-plusplus */
 /* eslint-disable no-unused-vars */
@@ -23,9 +28,7 @@ class TweetsController {
   }
 
   addTweet(text) {
-    // this.tweetCollection.add(text);
     return tweetApi.postTweet(text);
-    // this.tweetFeed.display(this.tweetCollection);
   }
 
   editTweet(id, text) {
@@ -40,7 +43,6 @@ class TweetsController {
 
   getFeed(result, skip = 0, top = 10, obj = null) {
     if (obj === null) {
-      // this.tweetFeed.display(this.tweetCollection, skip, top);
       this.tweetFeed.display(result, skip, top);
     } else {
       this.filter.display(result, obj, skip, top);
@@ -52,7 +54,6 @@ class TweetsController {
   }
 
   addComment(result, id) {
-    // this.tweetCollection.addComment(id, text);
     this.tweet.display(result, id);
   }
 }
@@ -91,7 +92,6 @@ class TweetFeedApiService {
         });
         hashtags = `&hashtags=${resultTags}`;
       }
-      // authorFil = `author=${authorFil}` || '';
       const response = await fetch(`https://jslabapi.datamola.com/tweet?${author}${text}${dateFrom}${dateTo}from=${from}&count=${count}${hashtags}`);
       const result = await response.json();
       if (response.status > 200) {
@@ -101,8 +101,6 @@ class TweetFeedApiService {
         tweetController.errorPage.display(result.statusCode, result.error);
       }
       const tweetCollection = new TweetCollection(result);
-      // tweetController.tweetCollection.tweetsArr = result;
-      // tweetController.getFeed();
       return tweetCollection;
     } catch (err) {
       console.log(err);
@@ -198,23 +196,8 @@ class TweetFeedApiService {
   }
 }
 
-// if (!(localStorage.getItem('tweetArr') && localStorage.getItem('userArr'))) {
-//   localStorage.setItem('currentUser', JSON.stringify(new TweetCollection(tweets).user));
-//   localStorage.setItem('tweetArr', JSON.stringify(new TweetCollection(tweets).tweetsArr));
-//   localStorage.setItem('userArr', JSON.stringify(new UserList(listUser).arrayUser));
-// }
-
 const tweetApi = new TweetFeedApiService();
 const tweetController = new TweetsController();
-// const tweetCollection = new TweetCollection();
-
-// if (localStorage.getItem('user')) {
-//   tweetController.tweetCollection.user = tweetController.tweetCollection.restoreUser();
-//   tweetController.setCurrentUser(tweetController.tweetCollection.user);
-// } else {
-//   tweetController.tweetCollection.user = null;
-// }
-
 function loadTweetApp(event) {
   const tagArray = [];
   const loadTweets = (e) => {
@@ -243,12 +226,8 @@ function loadTweetApp(event) {
               document.querySelector('.load-button').classList.add('active-load-button');
             }
           }
-        );//!
+        );
       }
-      // tweetController.getFeed(0, loadTweets.counter * 10);
-      // if (loadTweets.counter * 10 < tweetController.tweetCollection.tweetsArr.length) { //!
-      //   document.querySelector('.load-button').classList.add('active-load-button');
-      // }
     }
   };
   const addHandler = (e) => {
@@ -270,11 +249,6 @@ function loadTweetApp(event) {
           }
         );
       });
-
-      // document.querySelector('.textarea-add-twit').value = '';
-      // if (loadTweets.counter * 10 < tweetController.tweetCollection.tweetsArr.length) {
-      //   document.querySelector('.load-button').classList.add('active-load-button');
-      // }
     }
   };
   const deleteHandler = (e) => {
@@ -291,7 +265,7 @@ function loadTweetApp(event) {
                 document.querySelector('.load-button').classList.add('active-load-button');
               }
             }
-          );//
+          );
         } else {
           tweetApi.getData(0, loadTweets.counter * 10).then(
             result => {
@@ -303,13 +277,9 @@ function loadTweetApp(event) {
                 document.querySelector('.load-button').classList.add('active-load-button');
               }
             }
-          );//!
+          );
         }
       });
-      // tweetController.removeTweet(e.target.parentElement.parentElement.id);
-      // if (loadTweets.counter * 10 < tweetController.tweetCollection.tweetsArr.length) { //!
-      //   document.querySelector('.load-button').classList.add('active-load-button');
-      // }
     }
   };
   const editHandler = (e) => {
@@ -322,9 +292,6 @@ function loadTweetApp(event) {
       e.target.textContent = 'Save';
       p.setAttribute('contenteditable', 'true');
       p.focus();
-      // if (loadTweets.counter * 10 < tweetController.tweetCollection.tweetsArr.length) { //!
-      //   document.querySelector('.load-button').classList.add('active-load-button');
-      // }
     } else if (e.target.classList.contains('edit-button') && e.target.textContent === 'Save') {
       const article = e.target.parentElement.parentElement.parentElement.parentElement;
       const p = e.target.parentElement.parentElement.previousElementSibling;
@@ -332,12 +299,6 @@ function loadTweetApp(event) {
         p.setAttribute('contenteditable', 'false');
         e.target.textContent = 'Edit';
       });
-      // tweetController.editTweet(article.id, p.textContent);
-      // p.setAttribute('contenteditable', 'false');
-      // e.target.textContent = 'Edit';
-      // if (loadTweets.counter * 10 < tweetController.tweetCollection.tweetsArr.length) { //!
-      //   document.querySelector('.load-button').classList.add('active-load-button');
-      // }
     }
   };
   const submitFilter = (e) => {
@@ -372,8 +333,7 @@ function loadTweetApp(event) {
           document.querySelector('.load-button').classList.add('active-load-button');
         }
       }
-    );//!
-    // tweetController.getFeed(0, 10, filterObj);
+    );
     filterBlock[4].value = '';
   };
   const showTweetPage = (e) => {
@@ -385,11 +345,8 @@ function loadTweetApp(event) {
               result.user = localStorage.getItem('user');
             }
             tweetController.showTweet(result, e.target.id);
-            // if (loadTweets.counter * 10 <= result.tweetsArr.length) {
-            //   document.querySelector('.load-button').classList.add('active-load-button');
-            // }
           }
-        );//
+        );
       } else {
         tweetApi.getData(0, loadTweets.counter * 10).then(
           result => {
@@ -397,18 +354,9 @@ function loadTweetApp(event) {
               result.user = localStorage.getItem('user');
             }
             tweetController.showTweet(result, e.target.id);
-            // if (loadTweets.counter * 10 <= result.tweetsArr.length) {
-            //   document.querySelector('.load-button').classList.add('active-load-button');
-            // }
           }
-        );//!
+        );
       }
-      // tweetApi.getData(0, loadTweets.counter * 10).then(result => {
-      //   if (localStorage.getItem('user')) {
-      //     result.user = localStorage.getItem('user');
-      //   }
-      //   tweetController.showTweet(result, e.target.id);
-      // });
     }
   };
   const addCommentTweet = (e) => {
@@ -421,13 +369,9 @@ function loadTweetApp(event) {
               result.user = localStorage.getItem('user');
             }
             tweetController.addComment(result, article.id);
-            // if (loadTweets.counter * 10 <= result.tweetsArr.length) {
-            //   document.querySelector('.load-button').classList.add('active-load-button');
-            // }
           }
-        );//!
+        );
       });
-      // tweetController.addComment(article.id, e.target.previousElementSibling.value);
     }
   };
 
@@ -443,11 +387,7 @@ function loadTweetApp(event) {
             document.querySelector('.load-button').classList.add('active-load-button');
           }
         }
-      );//!
-      // tweetController.getFeed();
-      // if (loadTweets.counter * 10 < tweetController.tweetCollection.tweetsArr.length) { //!
-      //   document.querySelector('.load-button').classList.add('active-load-button');
-      // }
+      );
     }
   };
   const loginPage = (e) => {
@@ -466,7 +406,6 @@ function loadTweetApp(event) {
     }
   };
   const registerNewUser = (e) => {
-    // let newUser;
     e.preventDefault();
     if (e.target === document.querySelector('.registration-button')) {
       if (register[1].value !== register[2].value) {
@@ -489,19 +428,12 @@ function loadTweetApp(event) {
           }
         }
       );
-      // newUser = tweetController.userList
-      //   .registerUser(register[0].value, register[1].value, register[2].value);
-      // if (newUser) {
-      // }
     }
     return null;
   };
   const authorizeCurrentUser = (e) => {
-    // let user;
     e.preventDefault();
     if (e.target === document.querySelector('.authorize')) {
-      // user = tweetController.userList
-      //   .authorizeUser(authorization[0].value, authorization[1].value);
       tweetApi.postLogin({
         ['login']: authorization[0].value,
         ['password']: authorization[1].value
@@ -526,16 +458,7 @@ function loadTweetApp(event) {
         if (result.statusCode === 400) {
           alert('Empty login or password');
         }
-        // console.log(result);
       });
-      // if (user) {
-      //   tweetController.setCurrentUser(user);
-      //   tweetController.getFeed();
-      // } else {
-      //   alert('Not found User');
-      //   authorization[0].value = '';
-      //   authorization[1].value = '';
-      // }
     }
   };
   const exitProfile = (e) => {
@@ -553,10 +476,6 @@ function loadTweetApp(event) {
           }
         }
       );
-      // tweetController.tweetCollection.user = null;
-      // tweetController.userList.saveUser(null);
-      // tweetController.getFeed();
-      // document.querySelector('.container-menu-user').classList.remove('twit-container-menu-user');
     }
   };
   const checkLengthText = (e) => {
@@ -601,7 +520,6 @@ function loadTweetApp(event) {
     }
   };
   document.body.addEventListener('click', addHandler);
-  // delete
   const mainTweet = document.getElementById('tweet-collection');
   mainTweet.addEventListener('click', deleteHandler);
   // edit
@@ -611,7 +529,6 @@ function loadTweetApp(event) {
   saveFilterButton.addEventListener('click', submitFilter);
   // load button
   loadTweets.counter = 1;
-  // mainTweet.addEventListener('click', loadTweets);
   mainTweet.addEventListener('click', loadTweets);
   // show tweet
   mainTweet.addEventListener('click', showTweetPage);
@@ -631,7 +548,6 @@ function loadTweetApp(event) {
   header.addEventListener('click', exitProfile);
   // keypress
   mainTweet.addEventListener('input', checkLengthText);
-  // mainTweet.addEventListener('paste', pasteText);
   // add tag
   const buttonAddTag = document.querySelector('.button-add-tag');
   buttonAddTag.addEventListener('click', addHashTag);
@@ -640,12 +556,6 @@ function loadTweetApp(event) {
   if (localStorage.getItem('user')) {
     tweetApi.getData(0, loadTweets.counter * 10).then(
       resultGetFeed => {
-        // if (resultGetFeed.statusCode > 200) {
-        //   if (document.querySelector('aside')) {
-        //     document.querySelector('aside').remove();
-        //   }
-        //   tweetController.errorPage.display(resultGetFeed.statusCode, resultGetFeed.error);
-        // }
         resultGetFeed.user = localStorage.getItem('user');
         tweetController.getFeed(resultGetFeed);
         if (loadTweets.counter * 10 <= resultGetFeed.tweetsArr.length) {
@@ -661,29 +571,8 @@ function loadTweetApp(event) {
           document.querySelector('.load-button').classList.add('active-load-button');
         }
       }
-    );//!
+    );
   }
-  // tweetController.getFeed();
-  // if (loadTweets.counter * 10 < tweetController.tweetCollection.tweetsArr.length) {
-  //   document.querySelector('.load-button').classList.add('active-load-button');
-  // }
-  // if (tweetController.tweetCollection.user === null) {
-  //   if (document.querySelector('.container-add-twit')) {
-  //     document.querySelector('.container-add-twit').remove();
-  //   }
-  //   document.querySelector('aside').classList.add('without-login');
-  //   document.querySelector('.container-menu-user').innerHTML = '<button class="login-button">Login</button>';
-  //   document.querySelector('.container-menu-user').classList.add('header-login-button');
-  // } else {
-  //   document.querySelector('aside').classList.remove('without-login');
-  //   document.querySelector('.container-menu-user').innerHTML = `
-  //     <div class="container-menu-user">
-  //       <span id="user" class="text-user-name">Musa</span>
-  //       <button class="exit-button">Exit</button>
-  //     </div>
-  //   `;
-  //   document.querySelector('.container-menu-user').classList.remove('header-login-button');
-  // }
 }
 
 window.addEventListener('load', loadTweetApp);

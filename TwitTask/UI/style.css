@@ -812,6 +812,7 @@ footer {
 }
 
 .input-login{
+    font-size:1.1rem;
     width:11.75rem;
     height: 2.1rem;
     padding: 0 0.5rem;
@@ -833,6 +834,7 @@ footer {
 }
 
 .input-password{
+    font-size:1.1rem;
     width:11.75rem;
     height: 2.1rem;
     padding: 0 0.5rem;
@@ -1022,7 +1024,7 @@ footer {
 
     .container-filter {
         width:33rem;
-        top:4rem;
+        top:4.5rem;
     }
 
     .context-input {
@@ -1074,8 +1076,7 @@ footer {
 
     .user-comment {
         width:58rem;
-        height:8rem;
-        padding-left: 4rem;
+        height:17rem;
     }
 
     .avatar-comment {
@@ -1095,7 +1096,6 @@ footer {
     .add-user-comment {
         width:58rem;
         height:9rem;
-        padding-left: 4rem;
     }
 
     .button-add-comment {
