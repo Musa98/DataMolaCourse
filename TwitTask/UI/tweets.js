@@ -957,6 +957,7 @@ class LoginPageView {
       </button>
       <button class="login-button">Login</button>
     `;
+    document.querySelector('.container-filter').classList.remove('show-block');
   }
 }
 
@@ -1077,5 +1078,28 @@ class UserList {
 
   saveUser(userName) {
     localStorage.setItem('currentUser', JSON.stringify(userName));
+  }
+}
+
+class Error {
+  constructor(id) {
+    this.id = document.getElementById(id);
+    if (!document.body) {
+      throw new Error('Incorrect id!');
+    }
+  }
+
+  display(status, message) {
+    const container = this.id;
+    container.innerHTML = `
+    <div class="container-main-enter">
+    <main id="tweet-collection" class="main-enter-block">
+        <div class="error">
+            <span class="error-title">Error ${status}</span>
+            <p class="error-text">${message}</p>
+        </div>
+    </main>
+    </div>
+    `;
   }
 }

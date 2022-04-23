@@ -14,6 +14,7 @@ class TweetsController {
     this.tweet = new TweetView('tweet-collection');
     this.loginPage = new LoginPageView('tweet-collection');
     this.registerPage = new RegisterPageView('tweet-collection');
+    this.errorPage = new Error('tweet-collection');
   }
 
   setCurrentUser(userName) {
@@ -93,8 +94,12 @@ class TweetFeedApiService {
       // authorFil = `author=${authorFil}` || '';
       const response = await fetch(`https://jslabapi.datamola.com/tweet?${author}${text}${dateFrom}${dateTo}from=${from}&count=${count}${hashtags}`);
       const result = await response.json();
-      console.log(result);
-      console.log(response.status);
+      if (response.status > 200) {
+        if (document.querySelector('aside')) {
+          document.querySelector('aside').remove();
+        }
+        tweetController.errorPage.display(result.statusCode, result.error);
+      }
       const tweetCollection = new TweetCollection(result);
       // tweetController.tweetCollection.tweetsArr = result;
       // tweetController.getFeed();
@@ -112,7 +117,11 @@ class TweetFeedApiService {
       },
       body: JSON.stringify(data)
     });
-    return response.json();
+    const result = await response.json();
+    if (result.statusCode > 200 && result.statusCode !== 403 && result.statusCode !== 400) {
+      tweetController.errorPage.display(result.statusCode, result.error);
+    }
+    return result;
   }
 
   async postRegistration(data) {
@@ -123,7 +132,11 @@ class TweetFeedApiService {
       },
       body: JSON.stringify(data)
     });
-    return response.json();
+    const result = await response.json();
+    if (result.statusCode > 200 && result.statusCode !== 409 && result.statusCode !== 400 && result.statusCode !== 401) {
+      tweetController.errorPage.display(result.statusCode, result.error);
+    }
+    return result;
   }
 
   async postTweet(textTweet) {
@@ -135,7 +148,11 @@ class TweetFeedApiService {
       },
       body: JSON.stringify({ text: textTweet })
     });
-    return response.json();
+    const result = await response.json();
+    if (result.statusCode > 200) {
+      tweetController.errorPage.display(result.statusCode, result.error);
+    }
+    return result;
   }
 
   async putTweet(id, editTextTweet) {
@@ -147,7 +164,11 @@ class TweetFeedApiService {
       },
       body: JSON.stringify({ text: editTextTweet })
     });
-    return response.json();
+    const result = await response.json();
+    if (result.statusCode > 200) {
+      tweetController.errorPage.display(result.statusCode, result.error);
+    }
+    return result;
   }
 
   async deleteTweet(id) {
@@ -169,7 +190,11 @@ class TweetFeedApiService {
       },
       body: JSON.stringify({ text: textComment })
     });
-    return response.json();
+    const result = await response.json();
+    if (result.statusCode > 200) {
+      tweetController.errorPage.display(result.statusCode, result.error);
+    }
+    return result;
   }
 }
 
@@ -195,8 +220,8 @@ function loadTweetApp(event) {
   const loadTweets = (e) => {
     if (e.target.classList.contains('load-button')) {
       loadTweets.counter++;
-      if (document['filter'][0].value || document['filter'][1].value || document['filter'][2].value || document['filter'][3].value || document['filter'][4].value) {
-        tweetApi.getData(0, loadTweets.counter * 10, document['filter'][0].value).then(
+      if (document.filter[0].value || document.filter[1].value || document.filter[2].value || document.filter[3].value || document.filter[4].value) {
+        tweetApi.getData(0, loadTweets.counter * 10, document.filter[0].value).then(
           result => {
             if (localStorage.getItem('user')) {
               result.user = localStorage.getItem('user');
@@ -255,8 +280,8 @@ function loadTweetApp(event) {
   const deleteHandler = (e) => {
     if (e.target.classList.contains('delete-img')) {
       tweetApi.deleteTweet(e.target.parentElement.parentElement.id).then(resultDeleteTweet => {
-        if (document['filter'][0].value || document['filter'][1].value || document['filter'][2].value || document['filter'][3].value || document['filter'][4].value) {
-          tweetApi.getData(0, loadTweets.counter * 10, document['filter'][0].value).then(
+        if (document.filter[0].value || document.filter[1].value || document.filter[2].value || document.filter[3].value || document.filter[4].value) {
+          tweetApi.getData(0, loadTweets.counter * 10, document.filter[0].value).then(
             result => {
               if (localStorage.getItem('user')) {
                 result.user = localStorage.getItem('user');
@@ -353,8 +378,8 @@ function loadTweetApp(event) {
   };
   const showTweetPage = (e) => {
     if (e.target.tagName === 'ARTICLE') {
-      if (document['filter'][0].value || document['filter'][1].value || document['filter'][2].value || document['filter'][3].value || document['filter'][4].value) {
-        tweetApi.getData(0, loadTweets.counter * 10, document['filter'][0].value).then(
+      if (document.filter[0].value || document.filter[1].value || document.filter[2].value || document.filter[3].value || document.filter[4].value) {
+        tweetApi.getData(0, loadTweets.counter * 10, document.filter[0].value).then(
           result => {
             if (localStorage.getItem('user')) {
               result.user = localStorage.getItem('user');
@@ -400,7 +425,7 @@ function loadTweetApp(event) {
             //   document.querySelector('.load-button').classList.add('active-load-button');
             // }
           }
-        )//!
+        );//!
       });
       // tweetController.addComment(article.id, e.target.previousElementSibling.value);
     }
@@ -453,8 +478,12 @@ function loadTweetApp(event) {
         ['password']: register[1].value
       }).then(
         result => {
-          if (result.statusCode === 409) {
+          if (result.statusCode === 400) {
+            alert('Empty some fields');
+          } else if (result.statusCode === 409) {
             alert('Login is alredy exists');
+          } else if (result.statusCode === 401) {
+            tweetController.loginPage.display();
           } else {
             tweetController.loginPage.display();
           }
@@ -493,6 +522,9 @@ function loadTweetApp(event) {
         }
         if (result.statusCode === 403) {
           alert('Incorrect login or password');
+        }
+        if (result.statusCode === 400) {
+          alert('Empty login or password');
         }
         // console.log(result);
       });
@@ -562,7 +594,6 @@ function loadTweetApp(event) {
   };
 
   const deleteHashTag = (e) => {
-    e.preventDefault();
     if (e.target.classList.contains('delete-img')) {
       const index = tagArray.indexOf(e.target.parentElement.previousElementSibling.textContent);
       tagArray.splice(index, 1);
@@ -609,6 +640,12 @@ function loadTweetApp(event) {
   if (localStorage.getItem('user')) {
     tweetApi.getData(0, loadTweets.counter * 10).then(
       resultGetFeed => {
+        // if (resultGetFeed.statusCode > 200) {
+        //   if (document.querySelector('aside')) {
+        //     document.querySelector('aside').remove();
+        //   }
+        //   tweetController.errorPage.display(resultGetFeed.statusCode, resultGetFeed.error);
+        // }
         resultGetFeed.user = localStorage.getItem('user');
         tweetController.getFeed(resultGetFeed);
         if (loadTweets.counter * 10 <= resultGetFeed.tweetsArr.length) {
