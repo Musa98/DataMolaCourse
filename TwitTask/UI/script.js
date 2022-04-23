@@ -11,7 +11,6 @@
 
 class TweetsController {
   constructor() {
-    // this.tweetCollection = new TweetCollection(tweets);
     this.userList = new UserList();
     this.header = new HeaderView('user');
     this.tweetFeed = new TweetFeedView('tweet-collection');
@@ -59,8 +58,12 @@ class TweetsController {
 }
 
 class TweetFeedApiService {
-  constructor(ip) {
-    this.ip = ip;
+  constructor(id) {
+    this.id = id;
+  }
+
+  getToken() {
+    return localStorage.getItem('token');
   }
 
   async getData(from = 0, count = 10, author = '', dateFrom = '', dateTo = '', text = '', hashtags = '') {
@@ -92,23 +95,41 @@ class TweetFeedApiService {
         });
         hashtags = `&hashtags=${resultTags}`;
       }
-      const response = await fetch(`https://jslabapi.datamola.com/tweet?${author}${text}${dateFrom}${dateTo}from=${from}&count=${count}${hashtags}`);
+      const response = await fetch(`${this.id}tweet?${author}${text}${dateFrom}${dateTo}from=${from}&count=${count}${hashtags}`);
       const result = await response.json();
       if (response.status > 200) {
         if (document.querySelector('aside')) {
           document.querySelector('aside').remove();
+        }
+        if (localStorage.getItem('user')) {
+          const container = document.querySelector('.container-menu-user');
+          container.innerHTML = `<span id="user" class="text-user-name">${localStorage.getItem('user')}</span>
+                                <button class="exit-button">Exit</button>`;
+        } else {
+          const container = document.querySelector('.container-menu-user');
+          container.innerHTML = '<button class="login-button">Login</button>';
         }
         tweetController.errorPage.display(result.statusCode, result.error);
       }
       const tweetCollection = new TweetCollection(result);
       return tweetCollection;
     } catch (err) {
-      console.log(err);
+      if (localStorage.getItem('user')) {
+        document.querySelector('.main-button').remove();
+        document.querySelector('.container-menu-user').style.width = '11.1rem';
+        document.querySelector('main').style.marginTop = '0rem';
+        console.log(err);
+      } else {
+        document.querySelector('.main-button').remove();
+        document.querySelector('.container-menu-user').style.width = 'auto';
+        document.querySelector('main').style.marginTop = '0rem';
+        console.log(err);
+      }
     }
   }
 
   async postLogin(data) {
-    const response = await fetch('https://jslabapi.datamola.com/login', {
+    const response = await fetch(`${this.id}login`, {
       method: 'POST',
       headers: {
         ['Content-Type']: 'application/json'
@@ -118,12 +139,13 @@ class TweetFeedApiService {
     const result = await response.json();
     if (result.statusCode > 200 && result.statusCode !== 403 && result.statusCode !== 400) {
       tweetController.errorPage.display(result.statusCode, result.error);
+      document.querySelector('main').style.marginTop = '0rem';
     }
     return result;
   }
 
   async postRegistration(data) {
-    const response = await fetch('https://jslabapi.datamola.com/registration', {
+    const response = await fetch(`${this.id}registration`, {
       method: 'POST',
       headers: {
         ['Content-Type']: 'application/json'
@@ -133,16 +155,17 @@ class TweetFeedApiService {
     const result = await response.json();
     if (result.statusCode > 200 && result.statusCode !== 409 && result.statusCode !== 400 && result.statusCode !== 401) {
       tweetController.errorPage.display(result.statusCode, result.error);
+      document.querySelector('main').style.marginTop = '0rem';
     }
     return result;
   }
 
   async postTweet(textTweet) {
-    const response = await fetch('https://jslabapi.datamola.com/tweet', {
+    const response = await fetch(`${this.id}tweet`, {
       method: 'POST',
       headers: {
         ['Content-Type']: 'application/json',
-        authorization: `Bearer ${localStorage.getItem('token')}`
+        authorization: `Bearer ${this.getToken()}`
       },
       body: JSON.stringify({ text: textTweet })
     });
@@ -154,49 +177,57 @@ class TweetFeedApiService {
   }
 
   async putTweet(id, editTextTweet) {
-    const response = await fetch(`https://jslabapi.datamola.com/tweet/${id}`, {
+    const response = await fetch(`${this.id}tweet/${id}`, {
       method: 'PUT',
       headers: {
         ['Content-Type']: 'application/json',
-        authorization: `Bearer ${localStorage.getItem('token')}`
+        authorization: `Bearer ${this.getToken()}`
       },
       body: JSON.stringify({ text: editTextTweet })
     });
     const result = await response.json();
     if (result.statusCode > 200) {
+      let isTweet = false;
+      if (document.querySelector('.twit-comment-page')) {
+        isTweet = true;
+      }
       tweetController.errorPage.display(result.statusCode, result.error);
+      if (isTweet) {
+        document.querySelector('.container-main-enter').style.marginTop = '0rem';
+      }
     }
     return result;
   }
 
   async deleteTweet(id) {
-    const response = await fetch(`https://jslabapi.datamola.com/tweet/${id}`, {
+    const response = await fetch(`${this.id}tweet/${id}`, {
       method: 'DELETE',
       headers: {
         ['Content-Type']: 'application/json',
-        authorization: `Bearer ${localStorage.getItem('token')}`
+        authorization: `Bearer ${this.getToken()}`
       }
     });
   }
 
   async postComment(id, textComment) {
-    const response = await fetch(`https://jslabapi.datamola.com/tweet/${id}/comment`, {
+    const response = await fetch(`${this.id}tweet/${id}/comment`, {
       method: 'POST',
       headers: {
         ['Content-Type']: 'application/json',
-        authorization: `Bearer ${localStorage.getItem('token')}`
+        authorization: `Bearer ${this.getToken()}`
       },
       body: JSON.stringify({ text: textComment })
     });
     const result = await response.json();
     if (result.statusCode > 200) {
       tweetController.errorPage.display(result.statusCode, result.error);
+      document.querySelector('.container-main-enter').style.marginTop = '0rem';
     }
     return result;
   }
 }
 
-const tweetApi = new TweetFeedApiService();
+const tweetApi = new TweetFeedApiService('https://jslabapi.datamola.com/');
 const tweetController = new TweetsController();
 function loadTweetApp(event) {
   const tagArray = [];
@@ -238,6 +269,10 @@ function loadTweetApp(event) {
         return;
       }
       tweetController.addTweet(tweetText).then(resultAdd =>{
+        if (resultAdd.statusCode) {
+          document.querySelector('aside').remove();
+          return;
+        }
         tweetApi.getData(0, loadTweets.counter * 10).then(
           result => {
             result.user = localStorage.getItem('user');
@@ -363,6 +398,9 @@ function loadTweetApp(event) {
     if (e.target.classList.contains('button-add-comment')) {
       const article = e.target.parentElement.parentElement.parentElement.previousElementSibling;
       tweetApi.postComment(article.id, e.target.previousElementSibling.value).then(resultComment => {
+        if (resultComment.statusCode) {
+          return;
+        }
         tweetApi.getData(0, loadTweets.counter * 10).then(
           result => {
             if (localStorage.getItem('user')) {
@@ -423,7 +461,7 @@ function loadTweetApp(event) {
             alert('Login is alredy exists');
           } else if (result.statusCode === 401) {
             tweetController.loginPage.display();
-          } else {
+          } else if (!result.statusCode) {
             tweetController.loginPage.display();
           }
         }
@@ -556,6 +594,9 @@ function loadTweetApp(event) {
   if (localStorage.getItem('user')) {
     tweetApi.getData(0, loadTweets.counter * 10).then(
       resultGetFeed => {
+        if (!resultGetFeed) {
+          return;
+        }
         resultGetFeed.user = localStorage.getItem('user');
         tweetController.getFeed(resultGetFeed);
         if (loadTweets.counter * 10 <= resultGetFeed.tweetsArr.length) {
