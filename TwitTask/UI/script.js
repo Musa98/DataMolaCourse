@@ -22,8 +22,9 @@ class TweetsController {
   }
 
   addTweet(text) {
-    this.tweetCollection.add(text);
-    this.tweetFeed.display(this.tweetCollection);
+    // this.tweetCollection.add(text);
+    return tweetApi.postTweet(text);
+    // this.tweetFeed.display(this.tweetCollection);
   }
 
   editTweet(id, text) {
@@ -45,13 +46,13 @@ class TweetsController {
     }
   }
 
-  showTweet(id) {
-    this.tweet.display(this.tweetCollection, id);
+  showTweet(result, id) {
+    this.tweet.display(result, id);
   }
 
-  addComment(id, text) {
-    this.tweetCollection.addComment(id, text);
-    this.tweet.display(this.tweetCollection, id);
+  addComment(result, id) {
+    // this.tweetCollection.addComment(id, text);
+    this.tweet.display(result, id);
   }
 }
 
@@ -125,14 +126,48 @@ class TweetFeedApiService {
     return response.json();
   }
 
-  async postTweet(test) {
+  async postTweet(textTweet) {
     const response = await fetch('https://jslabapi.datamola.com/tweet', {
       method: 'POST',
       headers: {
         ['Content-Type']: 'application/json',
-        authorization: `Bearer ${test.token}`
+        authorization: `Bearer ${localStorage.getItem('token')}`
       },
-      body: JSON.stringify(test)
+      body: JSON.stringify({ text: textTweet })
+    });
+    return response.json();
+  }
+
+  async putTweet(id, editTextTweet) {
+    const response = await fetch(`https://jslabapi.datamola.com/tweet/${id}`, {
+      method: 'PUT',
+      headers: {
+        ['Content-Type']: 'application/json',
+        authorization: `Bearer ${localStorage.getItem('token')}`
+      },
+      body: JSON.stringify({ text: editTextTweet })
+    });
+    return response.json();
+  }
+
+  async deleteTweet(id) {
+    const response = await fetch(`https://jslabapi.datamola.com/tweet/${id}`, {
+      method: 'DELETE',
+      headers: {
+        ['Content-Type']: 'application/json',
+        authorization: `Bearer ${localStorage.getItem('token')}`
+      }
+    });
+  }
+
+  async postComment(id, textComment) {
+    const response = await fetch(`https://jslabapi.datamola.com/tweet/${id}/comment`, {
+      method: 'POST',
+      headers: {
+        ['Content-Type']: 'application/json',
+        authorization: `Bearer ${localStorage.getItem('token')}`
+      },
+      body: JSON.stringify({ text: textComment })
     });
     return response.json();
   }
@@ -146,6 +181,7 @@ class TweetFeedApiService {
 
 const tweetApi = new TweetFeedApiService();
 const tweetController = new TweetsController();
+// const tweetCollection = new TweetCollection();
 
 // if (localStorage.getItem('user')) {
 //   tweetController.tweetCollection.user = tweetController.tweetCollection.restoreUser();
@@ -159,9 +195,12 @@ function loadTweetApp(event) {
   const loadTweets = (e) => {
     if (e.target.classList.contains('load-button')) {
       loadTweets.counter++;
-      if (document['filter'][0] || document['filter'][1] || document['filter'][2] || document['filter'][3] || document['filter'][4]) {
+      if (document['filter'][0].value || document['filter'][1].value || document['filter'][2].value || document['filter'][3].value || document['filter'][4].value) {
         tweetApi.getData(0, loadTweets.counter * 10, document['filter'][0].value).then(
           result => {
+            if (localStorage.getItem('user')) {
+              result.user = localStorage.getItem('user');
+            }
             submitFilter();
             if (loadTweets.counter * 10 <= result.tweetsArr.length) {
               document.querySelector('.load-button').classList.add('active-load-button');
@@ -171,6 +210,9 @@ function loadTweetApp(event) {
       } else {
         tweetApi.getData(0, loadTweets.counter * 10).then(
           result => {
+            if (localStorage.getItem('user')) {
+              result.user = localStorage.getItem('user');
+            }
             tweetController.getFeed(result, 0, loadTweets.counter * 10);
             if (loadTweets.counter * 10 <= result.tweetsArr.length) {
               document.querySelector('.load-button').classList.add('active-load-button');
@@ -191,19 +233,58 @@ function loadTweetApp(event) {
       if (!tweetText) {
         return;
       }
-      tweetController.addTweet(tweetText);
-      document.querySelector('.textarea-add-twit').value = '';
-      if (loadTweets.counter * 10 < tweetController.tweetCollection.tweetsArr.length) {
-        document.querySelector('.load-button').classList.add('active-load-button');
-      }
+      tweetController.addTweet(tweetText).then(resultAdd =>{
+        tweetApi.getData(0, loadTweets.counter * 10).then(
+          result => {
+            result.user = localStorage.getItem('user');
+            tweetController.tweetFeed.display(result);
+            if (loadTweets.counter * 10 <= result.tweetsArr.length) {
+              document.querySelector('.load-button').classList.add('active-load-button');
+            }
+            document.querySelector('.textarea-add-twit').value = '';
+          }
+        );
+      });
+
+      // document.querySelector('.textarea-add-twit').value = '';
+      // if (loadTweets.counter * 10 < tweetController.tweetCollection.tweetsArr.length) {
+      //   document.querySelector('.load-button').classList.add('active-load-button');
+      // }
     }
   };
   const deleteHandler = (e) => {
     if (e.target.classList.contains('delete-img')) {
-      tweetController.removeTweet(e.target.parentElement.parentElement.id);
-      if (loadTweets.counter * 10 < tweetController.tweetCollection.tweetsArr.length) { //!
-        document.querySelector('.load-button').classList.add('active-load-button');
-      }
+      tweetApi.deleteTweet(e.target.parentElement.parentElement.id).then(resultDeleteTweet => {
+        if (document['filter'][0].value || document['filter'][1].value || document['filter'][2].value || document['filter'][3].value || document['filter'][4].value) {
+          tweetApi.getData(0, loadTweets.counter * 10, document['filter'][0].value).then(
+            result => {
+              if (localStorage.getItem('user')) {
+                result.user = localStorage.getItem('user');
+              }
+              submitFilter();
+              if (loadTweets.counter * 10 <= result.tweetsArr.length) {
+                document.querySelector('.load-button').classList.add('active-load-button');
+              }
+            }
+          );//
+        } else {
+          tweetApi.getData(0, loadTweets.counter * 10).then(
+            result => {
+              if (localStorage.getItem('user')) {
+                result.user = localStorage.getItem('user');
+              }
+              tweetController.getFeed(result, 0, loadTweets.counter * 10);
+              if (loadTweets.counter * 10 <= result.tweetsArr.length) {
+                document.querySelector('.load-button').classList.add('active-load-button');
+              }
+            }
+          );//!
+        }
+      });
+      // tweetController.removeTweet(e.target.parentElement.parentElement.id);
+      // if (loadTweets.counter * 10 < tweetController.tweetCollection.tweetsArr.length) { //!
+      //   document.querySelector('.load-button').classList.add('active-load-button');
+      // }
     }
   };
   const editHandler = (e) => {
@@ -212,22 +293,26 @@ function loadTweetApp(event) {
       const author = e.target
         .parentElement.parentElement.parentElement
         .previousElementSibling;
-      if (tweetController.tweetCollection.user !== author.textContent) return;
+      if (localStorage.getItem('user') !== author.textContent) return;
       e.target.textContent = 'Save';
       p.setAttribute('contenteditable', 'true');
       p.focus();
-      if (loadTweets.counter * 10 < tweetController.tweetCollection.tweetsArr.length) { //!
-        document.querySelector('.load-button').classList.add('active-load-button');
-      }
+      // if (loadTweets.counter * 10 < tweetController.tweetCollection.tweetsArr.length) { //!
+      //   document.querySelector('.load-button').classList.add('active-load-button');
+      // }
     } else if (e.target.classList.contains('edit-button') && e.target.textContent === 'Save') {
       const article = e.target.parentElement.parentElement.parentElement.parentElement;
       const p = e.target.parentElement.parentElement.previousElementSibling;
-      tweetController.editTweet(article.id, p.textContent);
-      p.setAttribute('contenteditable', 'false');
-      e.target.textContent = 'Edit';
-      if (loadTweets.counter * 10 < tweetController.tweetCollection.tweetsArr.length) { //!
-        document.querySelector('.load-button').classList.add('active-load-button');
-      }
+      tweetApi.putTweet(article.id, p.textContent).then(resultEditTweet => {
+        p.setAttribute('contenteditable', 'false');
+        e.target.textContent = 'Edit';
+      });
+      // tweetController.editTweet(article.id, p.textContent);
+      // p.setAttribute('contenteditable', 'false');
+      // e.target.textContent = 'Edit';
+      // if (loadTweets.counter * 10 < tweetController.tweetCollection.tweetsArr.length) { //!
+      //   document.querySelector('.load-button').classList.add('active-load-button');
+      // }
     }
   };
   const submitFilter = (e) => {
@@ -254,6 +339,9 @@ function loadTweetApp(event) {
     }
     tweetApi.getData(0, loadTweets.counter * 10, filterBlock[0].value, filterBlock[1].value, filterBlock[2].value, filterBlock[3].value, filterObj.hashtags).then(
       result => {
+        if (localStorage.getItem('user')) {
+          result.user = localStorage.getItem('user');
+        }
         tweetController.getFeed(result, 0, 10, filterObj);
         if (loadTweets.counter * 10 <= result.tweetsArr.length) {
           document.querySelector('.load-button').classList.add('active-load-button');
@@ -265,13 +353,56 @@ function loadTweetApp(event) {
   };
   const showTweetPage = (e) => {
     if (e.target.tagName === 'ARTICLE') {
-      tweetController.showTweet(e.target.id);
+      if (document['filter'][0].value || document['filter'][1].value || document['filter'][2].value || document['filter'][3].value || document['filter'][4].value) {
+        tweetApi.getData(0, loadTweets.counter * 10, document['filter'][0].value).then(
+          result => {
+            if (localStorage.getItem('user')) {
+              result.user = localStorage.getItem('user');
+            }
+            tweetController.showTweet(result, e.target.id);
+            // if (loadTweets.counter * 10 <= result.tweetsArr.length) {
+            //   document.querySelector('.load-button').classList.add('active-load-button');
+            // }
+          }
+        );//
+      } else {
+        tweetApi.getData(0, loadTweets.counter * 10).then(
+          result => {
+            if (localStorage.getItem('user')) {
+              result.user = localStorage.getItem('user');
+            }
+            tweetController.showTweet(result, e.target.id);
+            // if (loadTweets.counter * 10 <= result.tweetsArr.length) {
+            //   document.querySelector('.load-button').classList.add('active-load-button');
+            // }
+          }
+        );//!
+      }
+      // tweetApi.getData(0, loadTweets.counter * 10).then(result => {
+      //   if (localStorage.getItem('user')) {
+      //     result.user = localStorage.getItem('user');
+      //   }
+      //   tweetController.showTweet(result, e.target.id);
+      // });
     }
   };
   const addCommentTweet = (e) => {
     if (e.target.classList.contains('button-add-comment')) {
       const article = e.target.parentElement.parentElement.parentElement.previousElementSibling;
-      tweetController.addComment(article.id, e.target.previousElementSibling.value);
+      tweetApi.postComment(article.id, e.target.previousElementSibling.value).then(resultComment => {
+        tweetApi.getData(0, loadTweets.counter * 10).then(
+          result => {
+            if (localStorage.getItem('user')) {
+              result.user = localStorage.getItem('user');
+            }
+            tweetController.addComment(result, article.id);
+            // if (loadTweets.counter * 10 <= result.tweetsArr.length) {
+            //   document.querySelector('.load-button').classList.add('active-load-button');
+            // }
+          }
+        )//!
+      });
+      // tweetController.addComment(article.id, e.target.previousElementSibling.value);
     }
   };
 
@@ -279,6 +410,9 @@ function loadTweetApp(event) {
     if (e.target.classList.contains('main-button') || e.target.parentElement.classList.contains('main-button')) {
       tweetApi.getData(0, loadTweets.counter * 10).then(
         result => {
+          if (localStorage.getItem('user')) {
+            result.user = localStorage.getItem('user');
+          }
           tweetController.getFeed(result);
           if (loadTweets.counter * 10 <= result.tweetsArr.length) {
             document.querySelector('.load-button').classList.add('active-load-button');
@@ -344,7 +478,9 @@ function loadTweetApp(event) {
         ['password']: authorization[1].value
       }).then(result =>{
         if (result.token) {
+          tweetApi.token = result.token;
           localStorage.setItem('user', authorization[0].value);
+          localStorage.setItem('token', result.token);
           tweetApi.getData(0, loadTweets.counter * 10).then(
             resultGetFeed => {
               resultGetFeed.user = localStorage.getItem('user');
@@ -373,6 +509,7 @@ function loadTweetApp(event) {
   const exitProfile = (e) => {
     e.preventDefault();
     if (e.target === document.querySelector('.exit-button')) {
+      localStorage.removeItem('user');
       localStorage.removeItem('user');
       tweetApi.getData(0, loadTweets.counter * 10).then(
         resultGetFeed => {
