@@ -1092,5 +1092,19 @@ class Error {
     </main>
     </div>
     `;
+    if (!document.querySelector('.main-button')) {
+      const mainButtonTemplate = document.getElementById('button-main-template');
+      const mainButton = mainButtonTemplate.content.cloneNode(true);
+      if (localStorage.getItem('user')) {
+        const titleUserName = document.querySelector('.text-user-name');
+        titleUserName.after(mainButton);
+        document.querySelector('.container-menu-user').classList.add('twit-container-menu-user');
+        document.querySelector('.container-menu-user').querySelector('.container-menu-user').style.width = '17rem';
+      } else {
+        const containerMenu = document.querySelector('.container-menu-user');
+        containerMenu.prepend(mainButton);
+        document.querySelector('.main-button').style.marginRight = '1rem';
+      }
+    }
   }
 }
