@@ -187,6 +187,9 @@ class TweetFeedApiService {
     });
     const result = await response.json();
     if (result.statusCode > 200) {
+      if (document.querySelector('aside')) {
+        document.querySelector('aside').remove();
+      }
       let isTweet = false;
       if (document.querySelector('.twit-comment-page')) {
         isTweet = true;
@@ -207,6 +210,20 @@ class TweetFeedApiService {
         authorization: `Bearer ${this.getToken()}`
       }
     });
+    const result = await response.json();
+    if (result.statusCode > 200) {
+      if (document.querySelector('aside')) {
+        document.querySelector('aside').remove();
+      }
+      let isTweet = false;
+      if (document.querySelector('.twit-comment-page')) {
+        isTweet = true;
+      }
+      tweetController.errorPage.display(result.statusCode, result.error);
+      if (isTweet) {
+        document.querySelector('.container-main-enter').style.marginTop = '0rem';
+      }
+    }
   }
 
   async postComment(id, textComment) {
@@ -289,6 +306,9 @@ function loadTweetApp(event) {
   const deleteHandler = (e) => {
     if (e.target.classList.contains('delete-img')) {
       tweetApi.deleteTweet(e.target.parentElement.parentElement.id).then(resultDeleteTweet => {
+        if (resultDeleteTweet.statusCode) {
+          return;
+        }
         if (document.filter[0].value || document.filter[1].value || document.filter[2].value || document.filter[3].value || document.filter[4].value) {
           tweetApi.getData(0, loadTweets.counter * 10, document.filter[0].value).then(
             result => {
