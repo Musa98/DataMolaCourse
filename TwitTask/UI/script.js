@@ -712,15 +712,14 @@ function loadTweetApp(event) {
       clearInterval(timerFirstFeed);
     } else {
       timerFirstFeed = setInterval(() => {
-        if (localStorage.getItem('user')) {
-          tweetApi.getData(0, loadTweets.counter * 10).then(
-            resultGetFeed => {
-              if (!resultGetFeed) {
-                return;
+        if (document.filter[0].value || document.filter[1].value || document.filter[2].value || document.filter[3].value || document.filter[4].value) {
+          tweetApi.getData(0, loadTweets.counter * 10, document.filter[0].value).then(
+            result => {
+              if (localStorage.getItem('user')) {
+                result.user = localStorage.getItem('user');
               }
-              resultGetFeed.user = localStorage.getItem('user');
-              tweetController.getFeed(resultGetFeed);
-              if (loadTweets.counter * 10 <= resultGetFeed.tweetsArr.length) {
+              submitFilter();
+              if (loadTweets.counter * 10 <= result.tweetsArr.length) {
                 document.querySelector('.load-button').classList.add('active-load-button');
               }
             }
@@ -728,7 +727,10 @@ function loadTweetApp(event) {
         } else {
           tweetApi.getData(0, loadTweets.counter * 10).then(
             result => {
-              tweetController.getFeed(result);
+              if (localStorage.getItem('user')) {
+                result.user = localStorage.getItem('user');
+              }
+              tweetController.getFeed(result, 0, loadTweets.counter * 10);
               if (loadTweets.counter * 10 <= result.tweetsArr.length) {
                 document.querySelector('.load-button').classList.add('active-load-button');
               }
