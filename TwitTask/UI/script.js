@@ -210,8 +210,8 @@ class TweetFeedApiService {
         authorization: `Bearer ${this.getToken()}`
       }
     });
-    const result = await response.json();
-    if (result.statusCode > 200) {
+    const result = await response;
+    if (result.status > 204) {
       if (document.querySelector('aside')) {
         document.querySelector('aside').remove();
       }
@@ -219,10 +219,11 @@ class TweetFeedApiService {
       if (document.querySelector('.twit-comment-page')) {
         isTweet = true;
       }
-      tweetController.errorPage.display(result.statusCode, result.error);
+      tweetController.errorPage.display(result.status, 'Can\'t delete message');
       if (isTweet) {
         document.querySelector('.container-main-enter').style.marginTop = '0rem';
       }
+      return result;
     }
   }
 
@@ -248,9 +249,62 @@ const tweetApi = new TweetFeedApiService('https://jslabapi.datamola.com/');
 const tweetController = new TweetsController();
 function loadTweetApp(event) {
   const tagArray = [];
+  let timerFirstFeed = setInterval(() => {
+    if (localStorage.getItem('user')) {
+      tweetApi.getData(0, loadTweets.counter * 10).then(
+        resultGetFeed => {
+          if (!resultGetFeed) {
+            return;
+          }
+          resultGetFeed.user = localStorage.getItem('user');
+          tweetController.getFeed(resultGetFeed);
+          if (loadTweets.counter * 10 <= resultGetFeed.tweetsArr.length) {
+            document.querySelector('.load-button').classList.add('active-load-button');
+          }
+        }
+      );
+    } else {
+      tweetApi.getData(0, loadTweets.counter * 10).then(
+        result => {
+          tweetController.getFeed(result);
+          if (loadTweets.counter * 10 <= result.tweetsArr.length) {
+            document.querySelector('.load-button').classList.add('active-load-button');
+          }
+        }
+      );
+    }
+  }, 10000);
   const loadTweets = (e) => {
     if (e.target.classList.contains('load-button')) {
+      clearInterval(timerFirstFeed);
       loadTweets.counter++;
+      timerFirstFeed = setInterval(() => {
+        if (document.filter[0].value || document.filter[1].value || document.filter[2].value || document.filter[3].value || document.filter[4].value) {
+          tweetApi.getData(0, loadTweets.counter * 10, document.filter[0].value).then(
+            result => {
+              if (localStorage.getItem('user')) {
+                result.user = localStorage.getItem('user');
+              }
+              submitFilter();
+              if (loadTweets.counter * 10 <= result.tweetsArr.length) {
+                document.querySelector('.load-button').classList.add('active-load-button');
+              }
+            }
+          );
+        } else {
+          tweetApi.getData(0, loadTweets.counter * 10).then(
+            result => {
+              if (localStorage.getItem('user')) {
+                result.user = localStorage.getItem('user');
+              }
+              tweetController.getFeed(result, 0, loadTweets.counter * 10);
+              if (loadTweets.counter * 10 <= result.tweetsArr.length) {
+                document.querySelector('.load-button').classList.add('active-load-button');
+              }
+            }
+          );
+        }
+      }, 10000);
       if (document.filter[0].value || document.filter[1].value || document.filter[2].value || document.filter[3].value || document.filter[4].value) {
         tweetApi.getData(0, loadTweets.counter * 10, document.filter[0].value).then(
           result => {
@@ -262,7 +316,7 @@ function loadTweetApp(event) {
               document.querySelector('.load-button').classList.add('active-load-button');
             }
           }
-        );//
+        );
       } else {
         tweetApi.getData(0, loadTweets.counter * 10).then(
           result => {
@@ -288,6 +342,7 @@ function loadTweetApp(event) {
       tweetController.addTweet(tweetText).then(resultAdd =>{
         if (resultAdd.statusCode) {
           document.querySelector('aside').remove();
+          clearInterval(timerFirstFeed);
           return;
         }
         tweetApi.getData(0, loadTweets.counter * 10).then(
@@ -306,7 +361,8 @@ function loadTweetApp(event) {
   const deleteHandler = (e) => {
     if (e.target.classList.contains('delete-img')) {
       tweetApi.deleteTweet(e.target.parentElement.parentElement.id).then(resultDeleteTweet => {
-        if (resultDeleteTweet.statusCode) {
+        if (resultDeleteTweet) {
+          clearInterval(timerFirstFeed);
           return;
         }
         if (document.filter[0].value || document.filter[1].value || document.filter[2].value || document.filter[3].value || document.filter[4].value) {
@@ -339,6 +395,7 @@ function loadTweetApp(event) {
   };
   const editHandler = (e) => {
     if (e.target.classList.contains('edit-button') && e.target.textContent === 'Edit') {
+      clearInterval(timerFirstFeed);
       const p = e.target.parentElement.parentElement.previousElementSibling;
       const author = e.target
         .parentElement.parentElement.parentElement
@@ -351,8 +408,39 @@ function loadTweetApp(event) {
       const article = e.target.parentElement.parentElement.parentElement.parentElement;
       const p = e.target.parentElement.parentElement.previousElementSibling;
       tweetApi.putTweet(article.id, p.textContent).then(resultEditTweet => {
+        if (resultEditTweet.statusCode) {
+          clearInterval(timerFirstFeed);
+          return;
+        }
         p.setAttribute('contenteditable', 'false');
         e.target.textContent = 'Edit';
+        timerFirstFeed = setInterval(() => {
+          if (document.filter[0].value || document.filter[1].value || document.filter[2].value || document.filter[3].value || document.filter[4].value) {
+            tweetApi.getData(0, loadTweets.counter * 10, document.filter[0].value).then(
+              result => {
+                if (localStorage.getItem('user')) {
+                  result.user = localStorage.getItem('user');
+                }
+                submitFilter();
+                if (loadTweets.counter * 10 <= result.tweetsArr.length) {
+                  document.querySelector('.load-button').classList.add('active-load-button');
+                }
+              }
+            );
+          } else {
+            tweetApi.getData(0, loadTweets.counter * 10).then(
+              result => {
+                if (localStorage.getItem('user')) {
+                  result.user = localStorage.getItem('user');
+                }
+                tweetController.getFeed(result, 0, loadTweets.counter * 10);
+                if (loadTweets.counter * 10 <= result.tweetsArr.length) {
+                  document.querySelector('.load-button').classList.add('active-load-button');
+                }
+              }
+            );
+          }
+        }, 10000);
       });
     }
   };
@@ -393,6 +481,7 @@ function loadTweetApp(event) {
   };
   const showTweetPage = (e) => {
     if (e.target.tagName === 'ARTICLE') {
+      clearInterval(timerFirstFeed);
       if (document.filter[0].value || document.filter[1].value || document.filter[2].value || document.filter[3].value || document.filter[4].value) {
         tweetApi.getData(0, loadTweets.counter * 10, document.filter[0].value).then(
           result => {
@@ -403,6 +492,7 @@ function loadTweetApp(event) {
           }
         );
       } else {
+        clearInterval(timerFirstFeed);
         tweetApi.getData(0, loadTweets.counter * 10).then(
           result => {
             if (localStorage.getItem('user')) {
@@ -435,6 +525,20 @@ function loadTweetApp(event) {
 
   const returnMainTweet = (e) => {
     if (e.target.classList.contains('main-button') || e.target.parentElement.classList.contains('main-button')) {
+      clearInterval(timerFirstFeed);
+      timerFirstFeed = setInterval(() => {
+        tweetApi.getData(0, loadTweets.counter * 10).then(
+          result => {
+            if (localStorage.getItem('user')) {
+              result.user = localStorage.getItem('user');
+            }
+            tweetController.getFeed(result);
+            if (loadTweets.counter * 10 <= result.tweetsArr.length) {
+              document.querySelector('.load-button').classList.add('active-load-button');
+            }
+          }
+        );
+      }, 10000);
       tweetApi.getData(0, loadTweets.counter * 10).then(
         result => {
           if (localStorage.getItem('user')) {
@@ -450,6 +554,7 @@ function loadTweetApp(event) {
   };
   const loginPage = (e) => {
     if (e.target.classList.contains('login-button')) {
+      clearInterval(timerFirstFeed);
       if (tweetController.loginPage.id.lastElementChild.classList.contains('twit-comment-page')) {
         tweetController.loginPage.id.style.marginTop = '0rem';
       } else {
@@ -500,6 +605,17 @@ function loadTweetApp(event) {
           tweetApi.token = result.token;
           localStorage.setItem('user', authorization[0].value);
           localStorage.setItem('token', result.token);
+          timerFirstFeed = setInterval(() => {
+            tweetApi.getData(0, loadTweets.counter * 10).then(
+              resultGetFeed => {
+                resultGetFeed.user = localStorage.getItem('user');
+                tweetController.getFeed(resultGetFeed);
+                if (loadTweets.counter * 10 <= resultGetFeed.tweetsArr.length) {
+                  document.querySelector('.load-button').classList.add('active-load-button');
+                }
+              }
+            );
+          }, 10000);
           tweetApi.getData(0, loadTweets.counter * 10).then(
             resultGetFeed => {
               resultGetFeed.user = localStorage.getItem('user');
@@ -524,6 +640,20 @@ function loadTweetApp(event) {
     if (e.target === document.querySelector('.exit-button')) {
       localStorage.removeItem('user');
       localStorage.removeItem('user');
+      if (document.querySelector('.twit-comment-page')) {
+        timerFirstFeed = setInterval(() => {
+          tweetApi.getData(0, loadTweets.counter * 10).then(
+            resultGetFeed => {
+              resultGetFeed.user = null;
+              tweetController.getFeed(resultGetFeed);
+              document.querySelector('.container-menu-user').classList.remove('twit-container-menu-user');
+              if (loadTweets.counter * 10 <= resultGetFeed.tweetsArr.length) {
+                document.querySelector('.load-button').classList.add('active-load-button');
+              }
+            }
+          );
+        }, 10000);
+      }
       tweetApi.getData(0, loadTweets.counter * 10).then(
         resultGetFeed => {
           resultGetFeed.user = null;
@@ -577,6 +707,37 @@ function loadTweetApp(event) {
       e.target.parentElement.parentElement.remove();
     }
   };
+  const filterTweetButton = (e) => {
+    if (document.querySelector('.container-filter').classList.contains('show-block')) {
+      clearInterval(timerFirstFeed);
+    } else {
+      timerFirstFeed = setInterval(() => {
+        if (localStorage.getItem('user')) {
+          tweetApi.getData(0, loadTweets.counter * 10).then(
+            resultGetFeed => {
+              if (!resultGetFeed) {
+                return;
+              }
+              resultGetFeed.user = localStorage.getItem('user');
+              tweetController.getFeed(resultGetFeed);
+              if (loadTweets.counter * 10 <= resultGetFeed.tweetsArr.length) {
+                document.querySelector('.load-button').classList.add('active-load-button');
+              }
+            }
+          );
+        } else {
+          tweetApi.getData(0, loadTweets.counter * 10).then(
+            result => {
+              tweetController.getFeed(result);
+              if (loadTweets.counter * 10 <= result.tweetsArr.length) {
+                document.querySelector('.load-button').classList.add('active-load-button');
+              }
+            }
+          );
+        }
+      }, 10000);
+    }
+  };
   document.body.addEventListener('click', addHandler);
   const mainTweet = document.getElementById('tweet-collection');
   mainTweet.addEventListener('click', deleteHandler);
@@ -611,6 +772,9 @@ function loadTweetApp(event) {
   buttonAddTag.addEventListener('click', addHashTag);
   const filter = document.querySelector('.container-filter');
   filter.addEventListener('click', deleteHashTag);
+  // fiter button
+  const filterButton = document.querySelector('.filter-button');
+  filterButton.addEventListener('click', filterTweetButton);
   if (localStorage.getItem('user')) {
     tweetApi.getData(0, loadTweets.counter * 10).then(
       resultGetFeed => {
