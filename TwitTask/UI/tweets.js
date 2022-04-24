@@ -335,7 +335,6 @@ class TweetCollection {
       let tweet = element;
       tweet.comments = element.comments.map(elementComment => new Comment(elementComment));
     });
-    // }
   }
 
   get user() {
@@ -600,7 +599,7 @@ class TweetFeedView {
         resultDate: '',
         resultTime: ''
       };
-      date = new Date(date);//!
+      date = new Date(date);
       dateStore.resultDate += date.getDate() > 9 ? `${date.getDate()}.` : `0${date.getDate()}.`;
       dateStore.resultDate += (date.getMonth() + 1) > 9 ? `${date.getMonth() + 1}.` : `0${date.getMonth() + 1}.`;
       dateStore.resultDate += String(date.getFullYear()).slice(2);
@@ -714,7 +713,7 @@ class FilterView {
         resultDate: '',
         resultTime: ''
       };
-      date = new Date(date);//!
+      date = new Date(date);
       dateStore.resultDate += date.getDate() > 9 ? `${date.getDate()}.` : `0${date.getDate()}.`;
       dateStore.resultDate += (date.getMonth() + 1) > 9 ? `${date.getMonth() + 1}.` : `0${date.getMonth() + 1}.`;
       dateStore.resultDate += String(date.getFullYear()).slice(2);
@@ -801,7 +800,7 @@ class TweetView {
         resultDate: '',
         resultTime: ''
       };
-      date = new Date(date);//!
+      date = new Date(date);
       dateStore.resultDate += date.getDate() > 9 ? `${date.getDate()}.` : `0${date.getDate()}.`;
       dateStore.resultDate += (date.getMonth() + 1) > 9 ? `${date.getMonth() + 1}.` : `0${date.getMonth() + 1}.`;
       dateStore.resultDate += String(date.getFullYear()).slice(2);
